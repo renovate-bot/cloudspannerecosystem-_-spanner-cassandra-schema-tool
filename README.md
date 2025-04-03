@@ -5,6 +5,9 @@ This CLI tool streamlines Cassandra to Spanner schema migration by automating th
 2. Translate those statements into Spanner-compatible DDL.
 3. Apply the resulting schema to your target Spanner database.
 
+[Core conecpts](https://cloud.google.com/spanner/docs/non-relational/spanner-for-cassandra-users#core_concepts) you need to know before using this tool:
+* The Cassandra keyspace is mapped directly to the Spanner database. Consequently, each database will only contain a single keyspace, retaining its original name.
+
 ## Note on the DDL Translation
 
 * Only `CREATE TABLE` statements are supported.
@@ -45,7 +48,7 @@ This CLI tool streamlines Cassandra to Spanner schema migration by automating th
 
 * The original Cassandra type will be added to the options in each column definition in the translated `CREATE TABLE` statement. See the example section below for details.
 * Cassandra (composite) partition key and clustering columns are combined to form the composite primary key in Spanner. See the example section below for details.
-* The translation process primarily focuses on **data type** and **primary key clause** conversion. It **does not** perform comprehensive semantic validation of the DDL. For instance, translation of the CREATE TABLE stmt will succeed even without a primary key, but Spanner will return an error upon application.
+* The translation process primarily focuses on **data type** and **primary key clause** conversion. It **does not** gurantee comprehensive semantic validation of the DDL.
 
 ## Requirements
 
@@ -117,7 +120,6 @@ CREATE TABLE IF NOT EXISTS testdb.example_table (
     bigint_value BIGINT,
     blob_value BLOB,
     boolean_value BOOLEAN,
-    counter_value COUNTER,
     decimal_value DECIMAL,
     double_value DOUBLE,
     float_value FLOAT,
@@ -156,7 +158,6 @@ CREATE TABLE IF NOT EXISTS example_table (
  bigint_value INT64 OPTIONS (cassandra_type = 'bigint'),
  blob_value BYTES(MAX) OPTIONS (cassandra_type = 'blob'),
  boolean_value BOOL OPTIONS (cassandra_type = 'boolean'),
- counter_value INT64 OPTIONS (cassandra_type = 'counter'),
  decimal_value NUMERIC OPTIONS (cassandra_type = 'decimal'),
  double_value FLOAT64 OPTIONS (cassandra_type = 'double'),
  float_value FLOAT32 OPTIONS (cassandra_type = 'float'),
@@ -175,6 +176,7 @@ CREATE TABLE IF NOT EXISTS example_table (
  date_value DATE OPTIONS (cassandra_type = 'date'),
  time_value INT64 OPTIONS (cassandra_type = 'time'),
 ) PRIMARY KEY (id)
+
 CREATE TABLE IF NOT EXISTS sensor_data (
  sensor_id STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'uuid'),
  reading_time TIMESTAMP NOT NULL OPTIONS (cassandra_type = 'timestamp'),
