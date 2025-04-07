@@ -18,8 +18,9 @@ package main
 
 import (
 	"os"
-	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCheckGCPCredentials(t *testing.T) {
@@ -40,30 +41,159 @@ func TestCheckGCPCredentials(t *testing.T) {
 	})
 }
 
-func TestExtractQueries(t *testing.T) {
-	content := "CREATE TABLE test (id INT PRIMARY KEY);\n-- This is a comment\nCREATE TABLE another_test (id INT PRIMARY KEY);\n"
+func TestStmtExtractor(t *testing.T) {
+	testCases := []struct {
+		name             string
+		content          string
+		expectedStmts    []string
+		expectError      bool
+		expectedErrorMsg string
+	}{
+		{
+			name: "Basic",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "No semicolon in the end of the last stmt",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY)",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY)",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Line comment at the beginning",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"// CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"-- CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Line comment at the end",
+			content: "CREATE TABLE test (id INT PRIMARY KEY); // test 123\n" +
+				"// CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"-- CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY); -- comment",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Block comment",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"/* \n" +
+				"CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE test (id INT PRIMARY KEY);*/" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Unterminated Block comment",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"/* \n" +
+				"CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Inline block comment",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"/*CREATE TABLE test (id INT PRIMARY KEY);*/ CREATE TABLE test2 (id2 INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE test2 (id2 INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Two block comments in the same line",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"/*CREATE TABLE test (id INT PRIMARY KEY);*/ CREATE TABLE test2 (id2 INT PRIMARY KEY); /* test */\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE test2 (id2 INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Double-slash in block comment",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"/* test // */CREATE TABLE test2 (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE test2 (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
+			name: "Double-slash after block comment",
+			content: "CREATE TABLE test (id INT PRIMARY KEY);\n" +
+				"/* test */ //CREATE TABLE test2 (id INT PRIMARY KEY);\n" +
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			expectedStmts: []string{
+				"CREATE TABLE test (id INT PRIMARY KEY);",
+				"CREATE TABLE another_test (id INT PRIMARY KEY);",
+			},
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+	}
+
+	// TODO: Use os.CreateTemp to create the test file.
 	filepath := "test.cql"
-
-	// Write the content to a temporary file
-	if err := os.WriteFile(filepath, []byte(content), 0644); err != nil {
-		t.Fatalf("Failed to write test file: %v", err)
-	}
-	defer os.Remove(filepath)
-
-	expectedQueries := []string{
-		"CREATE TABLE test (id INT PRIMARY KEY); ",
-		"CREATE TABLE another_test (id INT PRIMARY KEY); ",
-	}
-
-	t.Run("Extract Queries Successfully", func(t *testing.T) {
-		queries, err := extractQueries(filepath)
-		if err != nil {
-			t.Fatalf("Expected no error, got %v", err)
-		}
-		for i, expected := range expectedQueries {
-			if strings.TrimSpace(queries[i]) != strings.TrimSpace(expected) {
-				t.Errorf("Expected %v, got %v", expected, queries[i])
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			// Write the content to a temporary file
+			if err := os.WriteFile(filepath, []byte(tc.content), 0644); err != nil {
+				t.Fatalf("Failed to write test file: %v", err)
 			}
-		}
-	})
+			defer os.Remove(filepath)
+
+			stmts, err := parseCqlFile(filepath)
+			if tc.expectError {
+				assert.Equal(t, tc.expectedErrorMsg, err.Error())
+				return
+			}
+			assert.NoError(t, err)
+			assert.Equal(t, tc.expectedStmts, stmts)
+		})
+	}
 }

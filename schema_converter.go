@@ -19,6 +19,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"strings"
@@ -85,41 +86,109 @@ func checkGCPCredentials() error {
 	return nil
 }
 
-// extractQueries parses a CQL file, splitting it into individual queries delimited by semicolons.
+// parseCqlFile reads a CQL file, extracts statements delimited by semicolons,
+// and ignores single-line (-- ... or // ...) and multi-line (/* ... */) comments.
+// Returns a slice of CQL statements or an error if file operations fail.
 //
-// TODO: Use the Antlr parser to extract the statements rather than using this function.
-func extractQueries(filePath string) ([]string, error) {
+// TODO: Considering refactoring this function to a struct that has a getNextStmt function.
+// The streaming approach can reduce memory usage and it is crucial for handling large files.
+func parseCqlFile(filePath string) ([]string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	var queries []string
-	var currentQuery strings.Builder
-	scanner := bufio.NewScanner(file)
+	var statements []string
+	var currentStatement strings.Builder
+	inMultilineComment := false
+	inLineComment := false
+	reader := bufio.NewReader(file)
 
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
+	for {
+		r, _, err := reader.ReadRune()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, fmt.Errorf("error reading file: %w", err)
+		}
 
-		// Skip empty lines and comments
-		if line == "" || strings.HasPrefix(line, "--") || strings.HasPrefix(line, "//") {
+		currentChar := string(r)
+
+		if inMultilineComment {
+			if currentChar == "*" {
+				nextRune, _, peekErr := reader.ReadRune()
+				if peekErr == nil && string(nextRune) == "/" {
+					inMultilineComment = false
+				} else if peekErr == nil {
+					err = reader.UnreadRune()
+					if err != nil {
+						return nil, fmt.Errorf("error unreading rune: %w", err)
+					}
+				}
+			}
 			continue
 		}
 
-		currentQuery.WriteString(line + " ")
+		if inLineComment {
+			if currentChar == "\n" {
+				inLineComment = false
+			}
+			continue
+		}
 
-		// If the line ends with a semicolon, treat it as a full query
-		if strings.HasSuffix(line, ";") {
-			queries = append(queries, currentQuery.String())
-			currentQuery.Reset()
+		if currentChar == "/" {
+			nextRune, _, peekErr := reader.ReadRune()
+			if peekErr == nil && string(nextRune) == "*" {
+				inMultilineComment = true
+			} else if peekErr == nil && string(nextRune) == "/" {
+				inLineComment = true
+			} else if peekErr == nil {
+				currentStatement.WriteString(currentChar)
+				err = reader.UnreadRune()
+				if err != nil {
+					return nil, fmt.Errorf("error unreading rune: %w", err)
+				}
+			} else {
+				currentStatement.WriteString(currentChar)
+			}
+			continue
+		}
+
+		if currentChar == "-" {
+			nextRune, _, peekErr := reader.ReadRune()
+			if peekErr == nil && string(nextRune) == "-" {
+				inLineComment = true
+			} else if peekErr == nil {
+				currentStatement.WriteString(currentChar)
+				err = reader.UnreadRune()
+				if err != nil {
+					return nil, fmt.Errorf("error unreading rune: %w", err)
+				}
+			} else {
+				currentStatement.WriteString(currentChar)
+			}
+			continue
+		}
+
+		currentStatement.WriteString(currentChar)
+
+		if currentChar == ";" {
+			statement := strings.TrimSpace(currentStatement.String())
+			if statement != "" {
+				statements = append(statements, statement)
+			}
+			currentStatement.Reset()
 		}
 	}
 
-	if err := scanner.Err(); err != nil {
-		return nil, err
+	// Handle any remaining statement if the file doesn't end with a semicolon
+	remainingStatement := strings.TrimSpace(currentStatement.String())
+	if remainingStatement != "" {
+		statements = append(statements, remainingStatement)
 	}
-	return queries, nil
+	return statements, nil
 }
 
 // writeStmtsToFile writes a slice of statements to the specified file.
@@ -170,15 +239,15 @@ func main() {
 	log.Printf("Starting Cassandra to Spanner schema conversion.\n")
 	log.Printf("Reading input CQL file: %s\n", flags.cqlFile)
 	var spannerCreateTableStmts []string
-	queries, err := extractQueries(flags.cqlFile)
+	stmts, err := parseCqlFile(flags.cqlFile)
 	if err != nil {
 		log.Fatalf("Failed to read the file: %v\n", err)
 	}
 
 	log.Printf("----------------------------------------------")
-	for _, query := range queries {
-		log.Printf("[Cassandra statement]\n%s\n", query)
-		spannerCreateTableStmt, err := translator.ToSpannerCreateTableStmt(query, flags.databaseID)
+	for _, stmt := range stmts {
+		log.Printf("[Cassandra statement]\n%s\n", stmt)
+		spannerCreateTableStmt, err := translator.ToSpannerCreateTableStmt(stmt, flags.databaseID)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
