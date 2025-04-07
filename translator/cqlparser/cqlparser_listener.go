@@ -76,6 +76,12 @@ type CqlParserListener interface {
 	// EnterCqlCollectionType is called when entering the cqlCollectionType production.
 	EnterCqlCollectionType(c *CqlCollectionTypeContext)
 
+	// EnterWihtTableOptions is called when entering the wihtTableOptions production.
+	EnterWihtTableOptions(c *WihtTableOptionsContext)
+
+	// EnterNonSemicolonToken is called when entering the nonSemicolonToken production.
+	EnterNonSemicolonToken(c *NonSemicolonTokenContext)
+
 	// ExitRoot is called when exiting the root production.
 	ExitRoot(c *RootContext)
 
@@ -129,4 +135,10 @@ type CqlParserListener interface {
 
 	// ExitCqlCollectionType is called when exiting the cqlCollectionType production.
 	ExitCqlCollectionType(c *CqlCollectionTypeContext)
+
+	// ExitWihtTableOptions is called when exiting the wihtTableOptions production.
+	ExitWihtTableOptions(c *WihtTableOptionsContext)
+
+	// ExitNonSemicolonToken is called when exiting the nonSemicolonToken production.
+	ExitNonSemicolonToken(c *NonSemicolonTokenContext)
 }

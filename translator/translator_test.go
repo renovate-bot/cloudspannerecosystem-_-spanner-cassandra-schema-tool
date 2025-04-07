@@ -110,6 +110,21 @@ func TestToSpannerCreate(t *testing.T) {
 			expectedErrorMsg: "",
 		},
 		{
+			name: "Table Options are ignored",
+			cqlStmt: `CREATE TABLE ks.t_test (
+							pk_text  TEXT PRIMARY KEY,
+							col_text text
+						) WITH 	COMPACT STORAGE AND
+						 		CLUSTERING ORDER BY (col_text DESC) AND
+								ID='5a1c395e-b41f-11e5-9f22-ba0be0483c18'`,
+			expectedSpannerStmt: "CREATE TABLE t_test (\n" +
+				" pk_text STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
+				" col_text STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
+				") PRIMARY KEY (pk_text)",
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
 			name: "All NativeType without counter",
 			cqlStmt: `CREATE TABLE ks.t_all_native (
 									pk_text  		TEXT 		PRIMARY KEY,

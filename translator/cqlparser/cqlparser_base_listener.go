@@ -142,3 +142,15 @@ func (s *BaseCqlParserListener) EnterCqlCollectionType(ctx *CqlCollectionTypeCon
 
 // ExitCqlCollectionType is called when production cqlCollectionType is exited.
 func (s *BaseCqlParserListener) ExitCqlCollectionType(ctx *CqlCollectionTypeContext) {}
+
+// EnterWihtTableOptions is called when production wihtTableOptions is entered.
+func (s *BaseCqlParserListener) EnterWihtTableOptions(ctx *WihtTableOptionsContext) {}
+
+// ExitWihtTableOptions is called when production wihtTableOptions is exited.
+func (s *BaseCqlParserListener) ExitWihtTableOptions(ctx *WihtTableOptionsContext) {}
+
+// EnterNonSemicolonToken is called when production nonSemicolonToken is entered.
+func (s *BaseCqlParserListener) EnterNonSemicolonToken(ctx *NonSemicolonTokenContext) {}
+
+// ExitNonSemicolonToken is called when production nonSemicolonToken is exited.
+func (s *BaseCqlParserListener) ExitNonSemicolonToken(ctx *NonSemicolonTokenContext) {}
