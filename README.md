@@ -1,9 +1,10 @@
 # Spanner Cassandra Schema Tool
 
 This CLI tool streamlines Cassandra to Spanner schema migration by automating the following key steps:
-1. Read the Cassandra DDL from a specified CQL file.
-2. Translate those statements into Spanner-compatible DDL.
-3. Apply the resulting schema to your target Spanner database.
+1. **CQL Parsing:** Read Cassandra DDL from a specified CQL file.
+2. **CQL Translation:** Translate Cassandra DDL into equivalent Spanner DDL.
+3. **Schema Export:** Dump the generated Spanner schema to the `schema.txt` file for review and manual application if needed.
+4. **Apply schema to Spanner Database (Optional):** Directly connects to your target Spanner database and applies the generated schema.
 
 [Core conecpts](https://cloud.google.com/spanner/docs/non-relational/spanner-for-cassandra-users#core_concepts) you need to know before using this tool:
 * The Cassandra keyspace is mapped directly to the Spanner database. Consequently, each database will only contain a single keyspace, retaining its original name.
@@ -150,7 +151,7 @@ CREATE TABLE IF NOT EXISTS sensor_data (
 );
 ```
 
-#### Translated Spanner DDL
+#### Spanner DDL in the output `schema.txt` file
 ```sql
 CREATE TABLE IF NOT EXISTS example_table (
  id STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'uuid'),
@@ -175,7 +176,7 @@ CREATE TABLE IF NOT EXISTS example_table (
  set_value ARRAY<STRING(MAX)> OPTIONS (cassandra_type = 'set<uuid>'),
  date_value DATE OPTIONS (cassandra_type = 'date'),
  time_value INT64 OPTIONS (cassandra_type = 'time'),
-) PRIMARY KEY (id)
+) PRIMARY KEY (id);
 
 CREATE TABLE IF NOT EXISTS sensor_data (
  sensor_id STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'uuid'),
@@ -184,5 +185,5 @@ CREATE TABLE IF NOT EXISTS sensor_data (
  temperature NUMERIC OPTIONS (cassandra_type = 'decimal'),
  humidity NUMERIC OPTIONS (cassandra_type = 'decimal'),
  pressure NUMERIC OPTIONS (cassandra_type = 'decimal'),
-) PRIMARY KEY (sensor_id, location, reading_time)
+) PRIMARY KEY (sensor_id, location, reading_time);
 ```

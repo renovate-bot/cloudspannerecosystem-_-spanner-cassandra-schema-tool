@@ -122,6 +122,30 @@ func extractQueries(filePath string) ([]string, error) {
 	return queries, nil
 }
 
+// writeStmtsToFile writes a slice of statements to the specified file.
+// If the file already exists, it will be removed before writing.
+// Returns an error if any operation fails.
+func writeStmtsToFile(filename string, stmts []string) error {
+	err := os.Remove(filename)
+	if err != nil && !os.IsNotExist(err) {
+		return fmt.Errorf("failed to remove existing file '%s': %w", filename, err)
+	}
+
+	file, err := os.Create(filename)
+	if err != nil {
+		return fmt.Errorf("failed to create file '%s': %w", filename, err)
+	}
+	defer file.Close()
+
+	for _, stmt := range stmts {
+		_, err := file.WriteString(stmt + ";\n\n")
+		if err != nil {
+			return fmt.Errorf("failed to write to file '%s': %w", filename, err)
+		}
+	}
+	return nil
+}
+
 func main() {
 	var flags Flags
 	flags.parseFlags()
@@ -143,45 +167,48 @@ func main() {
 	defer adminClient.Close()
 
 	// Translates the Cassandra DDL stmts in the CQL file to corresponding Spanner Stmts.
-	fmt.Printf("Starting Cassandra to Spanner conversion for '%s'\n\n\n", flags.cqlFile)
+	log.Printf("Starting Cassandra to Spanner schema conversion.\n")
+	log.Printf("Reading input CQL file: %s\n", flags.cqlFile)
 	var spannerCreateTableStmts []string
 	queries, err := extractQueries(flags.cqlFile)
 	if err != nil {
 		log.Fatalf("Failed to read the file: %v\n", err)
 	}
+
+	log.Printf("----------------------------------------------")
 	for _, query := range queries {
-		fmt.Printf("Converting statement: '%s'\n", query)
+		log.Printf("[Cassandra statement]\n%s\n", query)
 		spannerCreateTableStmt, err := translator.ToSpannerCreateTableStmt(query, flags.databaseID)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
-		fmt.Print("-> SUCCESS\n\n")
+		log.Printf("[Converted Spanner statement]\n%s\n", spannerCreateTableStmt)
+		log.Printf("----------------------------------------------")
 		spannerCreateTableStmts = append(spannerCreateTableStmts, spannerCreateTableStmt)
 	}
-	// TODO: Add a summary block.
 
-	fmt.Print("------------ Generated Spanner DDL ------------\n\n")
-	for _, value := range spannerCreateTableStmts {
-		fmt.Printf("%s\n\n", value)
-	}
-	fmt.Println("------------ End of Spanner DDL ------------")
-
-	if flags.dryRun {
-		fmt.Println("\n*** DRY RUN: The DDL above shows the expected output but was NOT executed. ***")
+	outputFile := "schema.txt"
+	log.Printf("Writing converted Spanner schema to: %s\n", outputFile)
+	err = writeStmtsToFile(outputFile, spannerCreateTableStmts)
+	if err != nil {
+		log.Println("Error writing to file:", err)
 		return
 	}
 
-	// Execute the translated Spanner DDL statements.
-	fmt.Println("\nExecuting generated DDL on Spanner...")
-	op, err := adminClient.UpdateDatabaseDdl(ctx, &databasepb.UpdateDatabaseDdlRequest{
-		Database:   fmt.Sprintf("projects/%s/instances/%s/databases/%s", flags.projectID, flags.instanceID, flags.databaseID),
-		Statements: spannerCreateTableStmts,
-	})
-	if err != nil {
-		log.Fatalf("Failed to execute DDL statements on the Cloud Spanner database: %v", err)
+	if flags.dryRun {
+		log.Println("Dry run enabled. Skipping schema execution.")
+	} else {
+		log.Println("Executing generated DDL on Spanner")
+		op, err := adminClient.UpdateDatabaseDdl(ctx, &databasepb.UpdateDatabaseDdlRequest{
+			Database:   fmt.Sprintf("projects/%s/instances/%s/databases/%s", flags.projectID, flags.instanceID, flags.databaseID),
+			Statements: spannerCreateTableStmts,
+		})
+		if err != nil {
+			log.Fatalf("Failed to execute DDL statements on the Cloud Spanner database: %v", err)
+		}
+		if err := op.Wait(ctx); err != nil {
+			log.Fatalf("Failed to execute DDL statements on the Cloud Spanner database: %v", err)
+		}
 	}
-	if err := op.Wait(ctx); err != nil {
-		log.Fatalf("Failed to execute DDL statements on the Cloud Spanner database: %v", err)
-	}
-	fmt.Println("Spanner schema update complete!")
+	log.Println("Schema conversion completed!")
 }

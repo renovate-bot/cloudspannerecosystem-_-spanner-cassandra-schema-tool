@@ -1,0 +1,34 @@
+CREATE TABLE IF NOT EXISTS example_table (
+ id STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'uuid'),
+ ascii_value STRING(MAX) OPTIONS (cassandra_type = 'ascii'),
+ bigint_value INT64 OPTIONS (cassandra_type = 'bigint'),
+ blob_value BYTES(MAX) OPTIONS (cassandra_type = 'blob'),
+ boolean_value BOOL OPTIONS (cassandra_type = 'boolean'),
+ decimal_value NUMERIC OPTIONS (cassandra_type = 'decimal'),
+ double_value FLOAT64 OPTIONS (cassandra_type = 'double'),
+ float_value FLOAT32 OPTIONS (cassandra_type = 'float'),
+ inet_value STRING(MAX) OPTIONS (cassandra_type = 'inet'),
+ int_value INT64 OPTIONS (cassandra_type = 'int'),
+ smallint_value INT64 OPTIONS (cassandra_type = 'smallint'),
+ text_value STRING(MAX) OPTIONS (cassandra_type = 'text'),
+ timestamp_value TIMESTAMP OPTIONS (cassandra_type = 'timestamp'),
+ timeuuid_value STRING(MAX) OPTIONS (cassandra_type = 'timeuuid'),
+ tinyint_value INT64 OPTIONS (cassandra_type = 'tinyint'),
+ varchar_value STRING(MAX) OPTIONS (cassandra_type = 'varchar'),
+ varint_value NUMERIC OPTIONS (cassandra_type = 'varint'),
+ list_value ARRAY<STRING(MAX)> OPTIONS (cassandra_type = 'list<text>'),
+ map_value JSON OPTIONS (cassandra_type = 'map<text,int>'),
+ set_value ARRAY<STRING(MAX)> OPTIONS (cassandra_type = 'set<uuid>'),
+ date_value DATE OPTIONS (cassandra_type = 'date'),
+ time_value INT64 OPTIONS (cassandra_type = 'time'),
+) PRIMARY KEY (id);
+
+CREATE TABLE IF NOT EXISTS sensor_data (
+ sensor_id STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'uuid'),
+ reading_time TIMESTAMP NOT NULL OPTIONS (cassandra_type = 'timestamp'),
+ location STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),
+ temperature NUMERIC OPTIONS (cassandra_type = 'decimal'),
+ humidity NUMERIC OPTIONS (cassandra_type = 'decimal'),
+ pressure NUMERIC OPTIONS (cassandra_type = 'decimal'),
+) PRIMARY KEY (sensor_id, location, reading_time);
+
