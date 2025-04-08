@@ -7,15 +7,14 @@ This CLI tool streamlines Cassandra to Spanner schema migration by automating th
 4. **Apply schema to Spanner Database (Optional):** Directly connects to your target Spanner database and applies the generated schema.
 
 [Core conecpts](https://cloud.google.com/spanner/docs/non-relational/spanner-for-cassandra-users#core_concepts) you need to know before using this tool:
-* The Cassandra keyspace is mapped directly to the Spanner database. Consequently, each database will only contain a single keyspace, retaining its original name.
+* The concept of a Cassandra keyspace is directly equivalent to a Spanner database. Therefore, when converting the DDL, the target Spanner database serves as the implicit keyspace. Imagine that selecting a Spanner database is akin to having created a keyspace with the same name and then executing a USE statement for it. Any keyspace specified within a CQL statement being translated must be identical to the name of the Spanner database you are actively using.
 
 ## Note on the DDL Translation
 
-* Only `CREATE TABLE` statements are supported.
-* Keyspace name is optional. If it is specified, it should match the database name.
-* Table options in the `CREATE TABLE` statements are not supported.
-* Static columns are not supported.
-* The following data types are not supported: Duration, Tuple, and Frozen
+* Only `CREATE TABLE` statements are supported. Other statements will result in a syntax error.
+* Table options in the `CREATE TABLE` statements are silently ignored.
+* Static columns are not supported (syntax error).
+* The following data types are not supported (syntax error): `Duration`, `Tuple`, and `Frozen`.
 * Mapping of [Cassandra native type](https://cassandra.apache.org/doc/stable/cassandra/cql/types.html#native-types) to [Spanner Type](https://cloud.google.com/spanner/docs/reference/standard-sql/data-types#data_type_list):
     | Cassandra | Spanner    |
     | --------- | ---------- |
@@ -99,7 +98,7 @@ go run schema_converter.go \
 - `--instance`: Spanner instance ID.
 - `--database`: Spanner database ID.
 - `--cql`: Path to the CQL file containing DDL statements.
-- `[--dry-run]`: Print the converted DDL statements without applying to the Spanner database. This flag is optional.
+- `[--dry-run]`: Output the converted DDL statements without applying to the Spanner database. This flag is optional.
 
 ### EXAMPLE
 
