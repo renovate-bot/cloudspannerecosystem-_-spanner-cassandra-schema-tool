@@ -33,6 +33,7 @@ K_NOT      : 'NOT';
 K_EXISTS   : 'EXISTS';
 K_PRIMARY  : 'PRIMARY';
 K_KEY      : 'KEY';
+K_WITH     : 'WITH';
 
 K_ASCII    : 'ASCII';
 K_BIGINT   : 'BIGINT';

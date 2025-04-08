@@ -31,10 +31,8 @@ cqlStatement
     : createTable
     ;
 
-// TODO: Add support on `IF NOT EXISTS`.
-// TODO: Add support on table_options
 createTable
-   : K_CREATE K_TABLE ifNotExist? tableName L_PAREN columnDefinitionList R_PAREN
+   : K_CREATE K_TABLE ifNotExist? tableName L_PAREN columnDefinitionList R_PAREN wihtTableOptions?
    ;
 
 columnDefinitionList
@@ -124,4 +122,53 @@ cqlNativeType
 cqlCollectionType
     : K_MAP L_ANGLE_BRACKET cqlNativeType COMMA cqlNativeType R_ANGLE_BRACKET
     | (K_SET | K_LIST) L_ANGLE_BRACKET cqlNativeType R_ANGLE_BRACKET
+    ;
+
+// TODO: Consider using a more precise syntax.
+wihtTableOptions
+    : K_WITH nonSemicolonToken*
+    ;
+
+nonSemicolonToken
+    : K_CREATE
+    | K_TABLE
+    | K_IF
+    | K_NOT
+    | K_EXISTS
+    | K_PRIMARY
+    | K_KEY
+    | K_WITH
+    | K_ASCII
+    | K_BIGINT
+    | K_BLOB
+    | K_BOOLEAN
+    | K_COUNTER
+    | K_DATE
+    | K_DECIMAL
+    | K_DOUBLE
+    | K_FLOAT
+    | K_INET
+    | K_INT
+    | K_SMALLINT
+    | K_TEXT
+    | K_TIME
+    | K_TIMESTAMP
+    | K_TIMEUUID
+    | K_TINYINT
+    | K_UUID
+    | K_VARCHAR
+    | K_VARINT
+    | K_MAP
+    | K_SET
+    | K_LIST
+    | DQUOTE
+    | DOT
+    | COMMA
+    | L_PAREN
+    | R_PAREN
+    | L_ANGLE_BRACKET
+    | R_ANGLE_BRACKET
+    | IDENTIFIER
+    | IDENTIFIER_WITH_HYPHEN
+    | UNKNOWN
     ;
