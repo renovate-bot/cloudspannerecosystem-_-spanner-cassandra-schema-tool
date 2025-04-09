@@ -52,7 +52,7 @@ This CLI tool streamlines Cassandra to Spanner schema migration by automating th
 
 ## Requirements
 
-- **Go**: Ensure that Go is installed on your system. The required go version is 1.25+.
+- **Go**: Ensure that Go is installed on your system. The required go version is 1.23+.
 - **Google Cloud SDK**: Ensure `gcloud` is installed and authenticated with proper permissions.
 - **Spanner Database**: Ensure the target Spanner database is created.
 
