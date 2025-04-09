@@ -53,6 +53,12 @@ func (s *BaseCqlParserListener) EnterCreateTable(ctx *CreateTableContext) {}
 // ExitCreateTable is called when production createTable is exited.
 func (s *BaseCqlParserListener) ExitCreateTable(ctx *CreateTableContext) {}
 
+// EnterUnsupportedStatement is called when production unsupportedStatement is entered.
+func (s *BaseCqlParserListener) EnterUnsupportedStatement(ctx *UnsupportedStatementContext) {}
+
+// ExitUnsupportedStatement is called when production unsupportedStatement is exited.
+func (s *BaseCqlParserListener) ExitUnsupportedStatement(ctx *UnsupportedStatementContext) {}
+
 // EnterColumnDefinitionList is called when production columnDefinitionList is entered.
 func (s *BaseCqlParserListener) EnterColumnDefinitionList(ctx *ColumnDefinitionListContext) {}
 
@@ -131,11 +137,17 @@ func (s *BaseCqlParserListener) EnterPrimaryKeyKeywords(ctx *PrimaryKeyKeywordsC
 // ExitPrimaryKeyKeywords is called when production primaryKeyKeywords is exited.
 func (s *BaseCqlParserListener) ExitPrimaryKeyKeywords(ctx *PrimaryKeyKeywordsContext) {}
 
-// EnterIfNotExist is called when production ifNotExist is entered.
-func (s *BaseCqlParserListener) EnterIfNotExist(ctx *IfNotExistContext) {}
+// EnterIfExists is called when production ifExists is entered.
+func (s *BaseCqlParserListener) EnterIfExists(ctx *IfExistsContext) {}
 
-// ExitIfNotExist is called when production ifNotExist is exited.
-func (s *BaseCqlParserListener) ExitIfNotExist(ctx *IfNotExistContext) {}
+// ExitIfExists is called when production ifExists is exited.
+func (s *BaseCqlParserListener) ExitIfExists(ctx *IfExistsContext) {}
+
+// EnterIfNotExists is called when production ifNotExists is entered.
+func (s *BaseCqlParserListener) EnterIfNotExists(ctx *IfNotExistsContext) {}
+
+// ExitIfNotExists is called when production ifNotExists is exited.
+func (s *BaseCqlParserListener) ExitIfNotExists(ctx *IfNotExistsContext) {}
 
 // EnterCqlNativeType is called when production cqlNativeType is entered.
 func (s *BaseCqlParserListener) EnterCqlNativeType(ctx *CqlNativeTypeContext) {}

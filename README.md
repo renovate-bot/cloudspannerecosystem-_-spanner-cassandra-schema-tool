@@ -11,7 +11,7 @@ This CLI tool streamlines Cassandra to Spanner schema migration by automating th
 
 ## Note on the DDL Translation
 
-* Only `CREATE TABLE` statements are supported. Other statements will result in a syntax error.
+* Only `CREATE TABLE` statements are processed. Other statements are ignored.
 * Table options in the `CREATE TABLE` statements are silently ignored.
 * Static columns are not supported (syntax error).
 * The following data types are not supported (syntax error): `Duration`, `Tuple`, and `Frozen`.

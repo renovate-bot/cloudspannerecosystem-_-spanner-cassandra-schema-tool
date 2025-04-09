@@ -20,7 +20,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestToSpannerCreate(t *testing.T) {
+func TestToSpannerStmt_CreateTable(t *testing.T) {
 	tests := []struct {
 		name                string
 		cqlStmt             string
@@ -28,7 +28,6 @@ func TestToSpannerCreate(t *testing.T) {
 		expectError         bool
 		expectedErrorMsg    string
 	}{
-		// Format the struct.
 		{
 			name: "Only Text type",
 			cqlStmt: `CREATE TABLE ks.t_test (
@@ -762,14 +761,7 @@ func TestToSpannerCreate(t *testing.T) {
 			cqlStmt:             ``,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input '<EOF>' expecting 'CREATE' at line 1",
-		},
-		{
-			name:                "No Create Syntax Error",
-			cqlStmt:             `select * from t `,
-			expectedSpannerStmt: "",
-			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'select' expecting 'CREATE' at line 1",
+			expectedErrorMsg:    "SyntaxException: mismatched input '<EOF>' expecting {'ALTER', 'BEGIN', 'CREATE', 'DELETE', 'DROP', 'GRANT', 'INSERT', 'LIST', 'REVOKE', 'SELECT', 'TRUNCATE', 'UPDATE', 'USE'} at line 1",
 		},
 		{
 			name:                "No table name Syntax Error",
@@ -805,7 +797,7 @@ func TestToSpannerCreate(t *testing.T) {
 					  )`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'ORDER' expecting {'AGGREGATE', 'ALL', 'AS', 'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'CALLED', 'CLUSTERING', 'COMPACT', 'CONTAINS', 'COUNT', 'COUNTER', 'CUSTOM', 'DATE', 'DECIMAL', 'DISTINCT', 'DOUBLE', 'EXISTS', 'FILTERING', 'FINALFUNC', 'FLOAT', 'FROZEN', 'FUNCTION', 'FUNCTIONS', 'INET', 'INITCOND', 'INPUT', 'INT', 'JSON', 'KEY', 'KEYS', 'KEYSPACES', 'LANGUAGE', 'LIST', 'LOGIN', 'MAP', 'NOLOGIN', 'NOSUPERUSER', 'OPTIONS', 'PASSWORD', 'PERMISSION', 'PERMISSIONS', 'RETURNS', 'ROLE', 'ROLES', 'SFUNC', 'SMALLINT', 'STATIC', 'STORAGE', 'STYPE', 'SUPERUSER', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'TRIGGER', 'TTL', 'TUPLE', 'TYPE', 'USER', 'USERS', 'UUID', 'VALUES', 'VARCHAR', 'VARINT', 'WRITETIME', IDENTIFIER} at line 1, column 16",
+			expectedErrorMsg:    "SyntaxException: mismatched input '.' expecting '(' at line 1, column 15",
 		},
 		{
 			name: "Use reserved keyword SCHEMA as the column name",
@@ -821,7 +813,8 @@ func TestToSpannerCreate(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			spannerStmt, err := ToSpannerCreateTableStmt(test.cqlStmt, "ks")
+			spannerStmt, ignored, err := ToSpannerStmt(test.cqlStmt, "ks")
+			assert.Equal(t, false, ignored)
 			if test.expectError {
 				assert.Equal(t, test.expectedErrorMsg, err.Error())
 				return
@@ -830,5 +823,193 @@ func TestToSpannerCreate(t *testing.T) {
 			assert.Equal(t, test.expectedSpannerStmt, spannerStmt)
 		})
 	}
+}
 
+func TestToSpannerStmt_NonCreateTable(t *testing.T) {
+	tests := []struct {
+		name    string
+		cqlStmt string
+	}{
+		{
+			name:    "use keyspace",
+			cqlStmt: `USE my_keyspace;`,
+		},
+		{
+			name:    "create keyspace",
+			cqlStmt: `CREATE KEYSPACE IF NOT EXISTS my_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};`,
+		},
+		{
+			name:    "alter keyspace",
+			cqlStmt: `ALTER KEYSPACE my_keyspace WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1': 2};`,
+		},
+		{
+			name:    "drop keyspace",
+			cqlStmt: `DROP KEYSPACE IF EXISTS my_keyspace;`,
+		},
+		{
+			name:    "alter table",
+			cqlStmt: `ALTER TABLE users ADD age INT;`,
+		},
+		{
+			name:    "drop table",
+			cqlStmt: `DROP TABLE IF EXISTS users;`,
+		},
+		{
+			name:    "truncate",
+			cqlStmt: `TRUNCATE users;`,
+		},
+		{
+			name:    "select",
+			cqlStmt: `SELECT * FROM users WHERE id = 123e4567-e89b-12d3-a456-426614174000;`,
+		},
+		{
+			name:    "insert",
+			cqlStmt: `INSERT INTO users (id, name, email) VALUES (uuid(), 'Alice', 'alice@example.com');`,
+		},
+		{
+			name:    "update",
+			cqlStmt: `UPDATE users SET email = 'newalice@example.com' WHERE id = 123e4567-e89b-12d3-a456-426614174000;`,
+		},
+		{
+			name:    "delete",
+			cqlStmt: `DELETE FROM users WHERE id = 123e4567-e89b-12d3-a456-426614174000;`,
+		},
+		{
+			name: "batch",
+			cqlStmt: `BEGIN BATCH
+					    INSERT INTO users (id, name) VALUES (uuid(), 'Bob');
+					    UPDATE users SET email = 'bob@example.com' WHERE name = 'Bob';
+					  APPLY BATCH;`,
+		},
+		{
+			name:    "create index",
+			cqlStmt: `CREATE INDEX ON users (email);`,
+		},
+		{
+			name:    "drop index",
+			cqlStmt: `DROP INDEX users_email_idx;`,
+		},
+		{
+			name: "create materialized view",
+			cqlStmt: `CREATE MATERIALIZED VIEW users_by_email AS
+						SELECT * FROM users
+						WHERE email IS NOT NULL AND id IS NOT NULL
+						PRIMARY KEY (email, id);`,
+		},
+		{
+			name: "alter materialized view",
+			cqlStmt: `ALTER MATERIALIZED VIEW cycling.cyclist_by_age 
+					  WITH comment = 'A most excellent and useful view'
+					  AND bloom_filter_fp_chance = 0.02;`,
+		},
+		{
+			name:    "drop materialized view",
+			cqlStmt: `DROP MATERIALIZED VIEW users_by_email;`,
+		},
+		{
+			name:    "create role",
+			cqlStmt: `CREATE ROLE analyst WITH PASSWORD = 'secret' AND LOGIN = true;`,
+		},
+		{
+			name:    "alter role",
+			cqlStmt: `ALTER ROLE bob WITH PASSWORD = 'PASSWORD_B' AND SUPERUSER = false;`,
+		},
+		{
+			name:    "drop role",
+			cqlStmt: `DROP ROLE analyst;`,
+		},
+		{
+			name:    "grant role",
+			cqlStmt: `GRANT report_writer TO alice;`,
+		},
+		{
+			name:    "revoke role",
+			cqlStmt: `REVOKE report_writer FROM alice;`,
+		},
+		{
+			name:    "list roles",
+			cqlStmt: `LIST ROLES;`,
+		},
+		{
+			name:    "grant permission",
+			cqlStmt: `GRANT SELECT ON ALL KEYSPACES TO data_reader;`,
+		},
+		{
+			name:    "revoke permission",
+			cqlStmt: `REVOKE DROP ON keyspace1.table1 FROM schema_owner;`,
+		},
+		{
+			name:    "list permissions",
+			cqlStmt: `LIST ALL PERMISSIONS OF analyst;`,
+		},
+		{
+			name: "create user",
+			cqlStmt: `CREATE USER alice WITH PASSWORD = 'password123';
+`,
+		},
+		{
+			name:    "alter user",
+			cqlStmt: `ALTER USER alice WITH PASSWORD = 'newpass456';`,
+		},
+		{
+			name:    "drop user",
+			cqlStmt: `DROP USER alice;`,
+		},
+		{
+			name:    "list users",
+			cqlStmt: `LIST USERS;`,
+		},
+		{
+			name: "create function",
+			cqlStmt: `CREATE OR REPLACE FUNCTION cycling.fLog (input double) 
+					  CALLED ON NULL INPUT 
+					  RETURNS double LANGUAGE java AS
+					  'return Double.valueOf(Math.log(input.doubleValue()));';`,
+		},
+		{
+			name:    "drop function",
+			cqlStmt: `DROP FUNCTION add_numbers;`,
+		},
+		{
+			name: "create aggregate",
+			cqlStmt: `CREATE AGGREGATE average(int)
+					  SFUNC sum_and_count
+					  STYPE tuple<int, int>
+					  FINALFUNC divide_sum_by_count
+					  INITCOND (0, 0);`,
+		},
+		{
+			name:    "drop aggregate",
+			cqlStmt: `DROP AGGREGATE average(int);`,
+		},
+		{
+			name:    "create type",
+			cqlStmt: `CREATE TYPE address (street text, city text, zip int);`,
+		},
+		{
+			name:    "alter type",
+			cqlStmt: `ALTER TYPE address ADD country text;`,
+		},
+		{
+			name:    "drop type",
+			cqlStmt: `DROP TYPE address;`,
+		},
+		{
+			name:    "create trigger",
+			cqlStmt: `CREATE TRIGGER user_trigger ON users USING 'com.example.TriggerClass';`,
+		},
+		{
+			name:    "drop trigger",
+			cqlStmt: `DROP TRIGGER user_trigger;`,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			spannerStmt, ignored, err := ToSpannerStmt(test.cqlStmt, "ks")
+			assert.Equal(t, true, ignored)
+			assert.NoError(t, err)
+			assert.Equal(t, "", spannerStmt)
+		})
+	}
 }
