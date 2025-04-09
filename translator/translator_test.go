@@ -174,6 +174,55 @@ func TestToSpannerCreate(t *testing.T) {
 			expectedErrorMsg: "",
 		},
 		{
+			name: "Use nonreserved keyword as column name",
+			cqlStmt: `CREATE TABLE ks.t_all_native (
+									TEXT  		TEXT 		PRIMARY KEY,
+									ASCII 		ASCII,
+									BIGINT 		BIGINT,
+									BLOB 		BLOB,
+									BOOLEAN 	BOOLEAN,
+									DATE 		DATE,
+									DECIMAL 	DECIMAL,
+									DOUBLE 		DOUBLE,
+									FLOAT 		FLOAT,
+									INET 		INET,
+									INT 		INT,
+									SMALLINT 	SMALLINT,
+									TEXT 		TEXT,
+									TIME 		TIME,
+									TIMESTAMP 	TIMESTAMP,
+									TIMEUUID 	TIMEUUID,
+									TINYINT 	TINYINT,
+									UUID 		UUID,
+									VARCHAR 	VARCHAR,
+									VARINT 		VARINT
+								)`,
+			expectedSpannerStmt: "CREATE TABLE t_all_native (\n" +
+				" TEXT STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
+				" ASCII STRING(MAX) OPTIONS (cassandra_type = 'ascii'),\n" +
+				" BIGINT INT64 OPTIONS (cassandra_type = 'bigint'),\n" +
+				" BLOB BYTES(MAX) OPTIONS (cassandra_type = 'blob'),\n" +
+				" BOOLEAN BOOL OPTIONS (cassandra_type = 'boolean'),\n" +
+				" DATE DATE OPTIONS (cassandra_type = 'date'),\n" +
+				" DECIMAL NUMERIC OPTIONS (cassandra_type = 'decimal'),\n" +
+				" DOUBLE FLOAT64 OPTIONS (cassandra_type = 'double'),\n" +
+				" FLOAT FLOAT32 OPTIONS (cassandra_type = 'float'),\n" +
+				" INET STRING(MAX) OPTIONS (cassandra_type = 'inet'),\n" +
+				" INT INT64 OPTIONS (cassandra_type = 'int'),\n" +
+				" SMALLINT INT64 OPTIONS (cassandra_type = 'smallint'),\n" +
+				" TEXT STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
+				" TIME INT64 OPTIONS (cassandra_type = 'time'),\n" +
+				" TIMESTAMP TIMESTAMP OPTIONS (cassandra_type = 'timestamp'),\n" +
+				" TIMEUUID STRING(MAX) OPTIONS (cassandra_type = 'timeuuid'),\n" +
+				" TINYINT INT64 OPTIONS (cassandra_type = 'tinyint'),\n" +
+				" UUID STRING(MAX) OPTIONS (cassandra_type = 'uuid'),\n" +
+				" VARCHAR STRING(MAX) OPTIONS (cassandra_type = 'varchar'),\n" +
+				" VARINT NUMERIC OPTIONS (cassandra_type = 'varint'),\n" +
+				") PRIMARY KEY (TEXT)",
+			expectError:      false,
+			expectedErrorMsg: "",
+		},
+		{
 			name: "Counter table",
 			cqlStmt: `CREATE TABLE ks.t_counter (
 						pk_text	TEXT 	PRIMARY KEY,
@@ -436,7 +485,7 @@ func TestToSpannerCreate(t *testing.T) {
 								)`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'JSON' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
+			expectedErrorMsg:    "SyntaxException: mismatched input 'JSON' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'LIST', 'MAP', 'SET', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 17",
 		},
 		{
 			name: "Invalid Cql INT64 type error",
@@ -446,7 +495,7 @@ func TestToSpannerCreate(t *testing.T) {
 								)`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'INT64' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
+			expectedErrorMsg:    "SyntaxException: mismatched input 'INT64' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'LIST', 'MAP', 'SET', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 17",
 		},
 		{
 			name: "Unsupported Cql duration type error",
@@ -456,7 +505,7 @@ func TestToSpannerCreate(t *testing.T) {
 								)`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'Duration' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
+			expectedErrorMsg:    "SyntaxException: mismatched input 'Duration' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'LIST', 'MAP', 'SET', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 17",
 		},
 		{
 			name: "Unsupported Cql tuple type error",
@@ -466,7 +515,7 @@ func TestToSpannerCreate(t *testing.T) {
 								)`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'tuple' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
+			expectedErrorMsg:    "SyntaxException: mismatched input 'tuple' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'LIST', 'MAP', 'SET', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 17",
 		},
 		{
 			name: "Unsupported Cql frozn type error",
@@ -476,7 +525,7 @@ func TestToSpannerCreate(t *testing.T) {
 								)`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input 'frozen' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
+			expectedErrorMsg:    "SyntaxException: mismatched input 'frozen' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'LIST', 'MAP', 'SET', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 17",
 		},
 		// Testcases for using counter as the type param of collection types.
 		{
@@ -727,14 +776,14 @@ func TestToSpannerCreate(t *testing.T) {
 			cqlStmt:             `Create table (pk text)`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    `SyntaxException: extraneous input '(' expecting {'IF', IDENTIFIER, IDENTIFIER_WITH_HYPHEN} at line 1, column 13`,
+			expectedErrorMsg:    "SyntaxException: extraneous input '(' expecting {'AGGREGATE', 'ALL', 'AS', 'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'CALLED', 'CLUSTERING', 'COMPACT', 'CONTAINS', 'COUNT', 'COUNTER', 'CUSTOM', 'DATE', 'DECIMAL', 'DISTINCT', 'DOUBLE', 'EXISTS', 'FILTERING', 'FINALFUNC', 'FLOAT', 'FROZEN', 'FUNCTION', 'FUNCTIONS', 'IF', 'INET', 'INITCOND', 'INPUT', 'INT', 'JSON', 'KEY', 'KEYS', 'KEYSPACES', 'LANGUAGE', 'LIST', 'LOGIN', 'MAP', 'NOLOGIN', 'NOSUPERUSER', 'OPTIONS', 'PASSWORD', 'PERMISSION', 'PERMISSIONS', 'RETURNS', 'ROLE', 'ROLES', 'SFUNC', 'SMALLINT', 'STATIC', 'STORAGE', 'STYPE', 'SUPERUSER', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'TRIGGER', 'TTL', 'TUPLE', 'TYPE', 'USER', 'USERS', 'UUID', 'VALUES', 'VARCHAR', 'VARINT', 'WRITETIME', IDENTIFIER, IDENTIFIER_WITH_HYPHEN} at line 1, column 13",
 		},
 		{
 			name:                "No column definition Syntax Error",
 			cqlStmt:             `Create table ks.t ()`,
 			expectedSpannerStmt: "",
 			expectError:         true,
-			expectedErrorMsg:    "SyntaxException: mismatched input ')' expecting IDENTIFIER at line 1, column 19",
+			expectedErrorMsg:    "SyntaxException: mismatched input ')' expecting {'AGGREGATE', 'ALL', 'AS', 'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'CALLED', 'CLUSTERING', 'COMPACT', 'CONTAINS', 'COUNT', 'COUNTER', 'CUSTOM', 'DATE', 'DECIMAL', 'DISTINCT', 'DOUBLE', 'EXISTS', 'FILTERING', 'FINALFUNC', 'FLOAT', 'FROZEN', 'FUNCTION', 'FUNCTIONS', 'INET', 'INITCOND', 'INPUT', 'INT', 'JSON', 'KEY', 'KEYS', 'KEYSPACES', 'LANGUAGE', 'LIST', 'LOGIN', 'MAP', 'NOLOGIN', 'NOSUPERUSER', 'OPTIONS', 'PASSWORD', 'PERMISSION', 'PERMISSIONS', 'RETURNS', 'ROLE', 'ROLES', 'SFUNC', 'SMALLINT', 'STATIC', 'STORAGE', 'STYPE', 'SUPERUSER', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'TRIGGER', 'TTL', 'TUPLE', 'TYPE', 'USER', 'USERS', 'UUID', 'VALUES', 'VARCHAR', 'VARINT', 'WRITETIME', IDENTIFIER} at line 1, column 19",
 		},
 		// Testcases for invalid keyspace name.
 		{
@@ -746,6 +795,27 @@ func TestToSpannerCreate(t *testing.T) {
 			expectedSpannerStmt: "",
 			expectError:         true,
 			expectedErrorMsg:    "Keyspace 'ks_2' does not match the Spanner database 'ks'",
+		},
+		// Testcase for reserved keywords.
+		{
+			name: "Use reserved keyword ORDER as the table name",
+			cqlStmt: `CREATE TABLE ks.ORDER (
+						pk_text  TEXT PRIMARY KEY,
+						col_text text
+					  )`,
+			expectedSpannerStmt: "",
+			expectError:         true,
+			expectedErrorMsg:    "SyntaxException: mismatched input 'ORDER' expecting {'AGGREGATE', 'ALL', 'AS', 'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'CALLED', 'CLUSTERING', 'COMPACT', 'CONTAINS', 'COUNT', 'COUNTER', 'CUSTOM', 'DATE', 'DECIMAL', 'DISTINCT', 'DOUBLE', 'EXISTS', 'FILTERING', 'FINALFUNC', 'FLOAT', 'FROZEN', 'FUNCTION', 'FUNCTIONS', 'INET', 'INITCOND', 'INPUT', 'INT', 'JSON', 'KEY', 'KEYS', 'KEYSPACES', 'LANGUAGE', 'LIST', 'LOGIN', 'MAP', 'NOLOGIN', 'NOSUPERUSER', 'OPTIONS', 'PASSWORD', 'PERMISSION', 'PERMISSIONS', 'RETURNS', 'ROLE', 'ROLES', 'SFUNC', 'SMALLINT', 'STATIC', 'STORAGE', 'STYPE', 'SUPERUSER', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'TRIGGER', 'TTL', 'TUPLE', 'TYPE', 'USER', 'USERS', 'UUID', 'VALUES', 'VARCHAR', 'VARINT', 'WRITETIME', IDENTIFIER} at line 1, column 16",
+		},
+		{
+			name: "Use reserved keyword SCHEMA as the column name",
+			cqlStmt: `CREATE TABLE ks.t_test (
+						SCHEMA		TEXT PRIMARY KEY,
+						col_text	text
+					  )`,
+			expectedSpannerStmt: "",
+			expectError:         true,
+			expectedErrorMsg:    "SyntaxException: extraneous input 'SCHEMA' expecting {'AGGREGATE', 'ALL', 'AS', 'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'CALLED', 'CLUSTERING', 'COMPACT', 'CONTAINS', 'COUNT', 'COUNTER', 'CUSTOM', 'DATE', 'DECIMAL', 'DISTINCT', 'DOUBLE', 'EXISTS', 'FILTERING', 'FINALFUNC', 'FLOAT', 'FROZEN', 'FUNCTION', 'FUNCTIONS', 'INET', 'INITCOND', 'INPUT', 'INT', 'JSON', 'KEY', 'KEYS', 'KEYSPACES', 'LANGUAGE', 'LIST', 'LOGIN', 'MAP', 'NOLOGIN', 'NOSUPERUSER', 'OPTIONS', 'PASSWORD', 'PERMISSION', 'PERMISSIONS', 'RETURNS', 'ROLE', 'ROLES', 'SFUNC', 'SMALLINT', 'STATIC', 'STORAGE', 'STYPE', 'SUPERUSER', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'TRIGGER', 'TTL', 'TUPLE', 'TYPE', 'USER', 'USERS', 'UUID', 'VALUES', 'VARCHAR', 'VARINT', 'WRITETIME', IDENTIFIER} at line 2, column 6",
 		},
 	}
 

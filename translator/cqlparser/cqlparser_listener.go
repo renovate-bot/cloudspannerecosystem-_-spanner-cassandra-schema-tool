@@ -61,6 +61,9 @@ type CqlParserListener interface {
 	// EnterGeneralIdentifier is called when entering the generalIdentifier production.
 	EnterGeneralIdentifier(c *GeneralIdentifierContext)
 
+	// EnterIdentifier is called when entering the identifier production.
+	EnterIdentifier(c *IdentifierContext)
+
 	// EnterCqlType is called when entering the cqlType production.
 	EnterCqlType(c *CqlTypeContext)
 
@@ -81,6 +84,15 @@ type CqlParserListener interface {
 
 	// EnterNonSemicolonToken is called when entering the nonSemicolonToken production.
 	EnterNonSemicolonToken(c *NonSemicolonTokenContext)
+
+	// EnterKeyword is called when entering the keyword production.
+	EnterKeyword(c *KeywordContext)
+
+	// EnterReservedKeyword is called when entering the reservedKeyword production.
+	EnterReservedKeyword(c *ReservedKeywordContext)
+
+	// EnterNonReservedKeyword is called when entering the nonReservedKeyword production.
+	EnterNonReservedKeyword(c *NonReservedKeywordContext)
 
 	// ExitRoot is called when exiting the root production.
 	ExitRoot(c *RootContext)
@@ -121,6 +133,9 @@ type CqlParserListener interface {
 	// ExitGeneralIdentifier is called when exiting the generalIdentifier production.
 	ExitGeneralIdentifier(c *GeneralIdentifierContext)
 
+	// ExitIdentifier is called when exiting the identifier production.
+	ExitIdentifier(c *IdentifierContext)
+
 	// ExitCqlType is called when exiting the cqlType production.
 	ExitCqlType(c *CqlTypeContext)
 
@@ -141,4 +156,13 @@ type CqlParserListener interface {
 
 	// ExitNonSemicolonToken is called when exiting the nonSemicolonToken production.
 	ExitNonSemicolonToken(c *NonSemicolonTokenContext)
+
+	// ExitKeyword is called when exiting the keyword production.
+	ExitKeyword(c *KeywordContext)
+
+	// ExitReservedKeyword is called when exiting the reservedKeyword production.
+	ExitReservedKeyword(c *ReservedKeywordContext)
+
+	// ExitNonReservedKeyword is called when exiting the nonReservedKeyword production.
+	ExitNonReservedKeyword(c *NonReservedKeywordContext)
 }

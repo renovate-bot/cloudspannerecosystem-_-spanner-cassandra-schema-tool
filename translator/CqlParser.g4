@@ -62,11 +62,11 @@ clusteringColumns
     ;
 
 columnName
-    : IDENTIFIER
+    : identifier
     ;
 
 tableName
-    : (keyspaceName DOT)? IDENTIFIER
+    : (keyspaceName DOT)? identifier
     ;
 
 // A Cassandra keyspace name is conventionally defined as an IDENTIFIER. Spanner
@@ -79,6 +79,11 @@ keyspaceName
 
 generalIdentifier
     : IDENTIFIER_WITH_HYPHEN
+    | identifier
+    ;
+
+identifier
+    : nonReservedKeyword
     | IDENTIFIER
     ;
 
@@ -130,37 +135,7 @@ wihtTableOptions
     ;
 
 nonSemicolonToken
-    : K_CREATE
-    | K_TABLE
-    | K_IF
-    | K_NOT
-    | K_EXISTS
-    | K_PRIMARY
-    | K_KEY
-    | K_WITH
-    | K_ASCII
-    | K_BIGINT
-    | K_BLOB
-    | K_BOOLEAN
-    | K_COUNTER
-    | K_DATE
-    | K_DECIMAL
-    | K_DOUBLE
-    | K_FLOAT
-    | K_INET
-    | K_INT
-    | K_SMALLINT
-    | K_TEXT
-    | K_TIME
-    | K_TIMESTAMP
-    | K_TIMEUUID
-    | K_TINYINT
-    | K_UUID
-    | K_VARCHAR
-    | K_VARINT
-    | K_MAP
-    | K_SET
-    | K_LIST
+    : keyword
     | DQUOTE
     | DOT
     | COMMA
@@ -172,3 +147,137 @@ nonSemicolonToken
     | IDENTIFIER_WITH_HYPHEN
     | UNKNOWN
     ;
+
+keyword
+    : reservedKeyword
+    | nonReservedKeyword
+    ;
+
+reservedKeyword
+	: K_ADD
+	| K_ALLOW
+	| K_ALTER
+	| K_AND
+	| K_APPLY
+	| K_ASC
+	| K_AUTHORIZE
+	| K_BATCH
+	| K_BEGIN
+	| K_BY
+	| K_COLUMNFAMILY
+	| K_CREATE
+	| K_DELETE
+	| K_DESC
+	| K_DESCRIBE
+	| K_DROP
+	| K_ENTRIES
+	| K_EXECUTE
+	| K_FROM
+	| K_FULL
+	| K_GRANT
+	| K_IF
+	| K_IN
+	| K_INDEX
+	| K_INFINITY
+	| K_INSERT
+	| K_INTO
+	| K_KEYSPACE
+	| K_LIMIT
+	| K_MODIFY
+	| K_NAN
+	| K_NORECURSIVE
+	| K_NOT
+	| K_NULL
+	| K_OF
+	| K_ON
+	| K_OR
+	| K_ORDER
+	| K_PRIMARY
+	| K_RENAME
+	| K_REPLACE
+	| K_REVOKE
+	| K_SCHEMA
+	| K_SELECT
+	| K_SET
+	| K_TABLE
+	| K_TO
+	| K_TOKEN
+	| K_TRUNCATE
+	| K_UNLOGGED
+	| K_UPDATE
+	| K_USE
+	| K_USING
+	| K_WHERE
+	| K_WITH
+	;
+
+nonReservedKeyword
+	: K_AGGREGATE
+	| K_ALL
+	| K_AS
+	| K_ASCII
+	| K_BIGINT
+	| K_BLOB
+	| K_BOOLEAN
+	| K_CALLED
+	| K_CLUSTERING
+	| K_COMPACT
+	| K_CONTAINS
+	| K_COUNT
+	| K_COUNTER
+	| K_CUSTOM
+	| K_DATE
+	| K_DECIMAL
+	| K_DISTINCT
+	| K_DOUBLE
+	| K_EXISTS
+	| K_FILTERING
+	| K_FINALFUNC
+	| K_FLOAT
+	| K_FROZEN
+	| K_FUNCTION
+	| K_FUNCTIONS
+	| K_INET
+	| K_INITCOND
+	| K_INPUT
+	| K_INT
+	| K_JSON
+	| K_KEY
+	| K_KEYS
+	| K_KEYSPACES
+	| K_LANGUAGE
+	| K_LIST
+	| K_LOGIN
+	| K_MAP
+	| K_NOLOGIN
+	| K_NOSUPERUSER
+	| K_OPTIONS
+	| K_PASSWORD
+	| K_PERMISSION
+	| K_PERMISSIONS
+	| K_RETURNS
+	| K_ROLE
+	| K_ROLES
+	| K_SFUNC
+	| K_SMALLINT
+	| K_STATIC
+	| K_STORAGE
+	| K_STYPE
+	| K_SUPERUSER
+	| K_TEXT
+	| K_TIME
+	| K_TIMESTAMP
+	| K_TIMEUUID
+	| K_TINYINT
+	| K_TRIGGER
+	| K_TTL
+	| K_TUPLE
+	| K_TYPE
+	| K_USER
+	| K_USERS
+	| K_UUID
+	| K_VALUES
+	| K_VARCHAR
+	| K_VARINT
+	| K_WRITETIME
+	;
