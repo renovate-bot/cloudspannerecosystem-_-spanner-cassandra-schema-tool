@@ -29,11 +29,59 @@ root
 
 cqlStatement
     : createTable
+	| unsupportedStatement
     ;
 
 createTable
-   : K_CREATE K_TABLE ifNotExist? tableName L_PAREN columnDefinitionList R_PAREN wihtTableOptions?
+   : K_CREATE K_TABLE ifNotExists? tableName L_PAREN columnDefinitionList R_PAREN wihtTableOptions?
    ;
+
+// Reference: https://cassandra.apache.org/doc/4.0/cassandra/cql/definitions.html#statements.
+// The syntax is not precisely defined; it is a simplification.
+unsupportedStatement
+	: K_USE keyspaceName
+	| K_CREATE K_KEYSPACE ifNotExists? keyspaceName K_WITH nonSemicolonToken*
+	| K_ALTER K_KEYSPACE keyspaceName K_WITH nonSemicolonToken*
+	| K_DROP K_KEYSPACE ifExists? keyspaceName
+	| K_ALTER K_TABLE tableName nonSemicolonToken* 
+	| K_DROP K_TABLE ifExists? tableName
+	| K_TRUNCATE K_TABLE? tableName
+
+	| K_SELECT nonSemicolonToken* 
+	| K_INSERT K_INTO nonSemicolonToken* 
+	| K_UPDATE tableName nonSemicolonToken* 
+	| K_DELETE nonSemicolonToken* 
+	| K_BEGIN (K_UNLOGGED | K_COUNTER)? K_BATCH (nonSemicolonToken* SEMICOLON)+ K_APPLY K_BATCH SEMICOLON
+
+	| K_CREATE K_CUSTOM? K_INDEX nonSemicolonToken*
+	| K_DROP K_INDEX ifExists? nonSemicolonToken*
+
+	| K_CREATE K_MATERIALIZED K_VIEW ifNotExists? nonSemicolonToken*
+	| K_ALTER K_MATERIALIZED K_VIEW nonSemicolonToken*
+	| K_DROP K_MATERIALIZED K_VIEW ifExists? nonSemicolonToken*
+
+	| K_CREATE K_ROLE ifNotExists? nonSemicolonToken*
+	| K_ALTER K_ROLE nonSemicolonToken*
+	| K_DROP K_ROLE nonSemicolonToken*
+	| K_GRANT nonSemicolonToken*
+	| K_REVOKE nonSemicolonToken*
+	| K_LIST nonSemicolonToken*
+	| K_CREATE K_USER nonSemicolonToken*
+	| K_ALTER K_USER nonSemicolonToken*
+	| K_DROP K_USER nonSemicolonToken*
+
+	| K_CREATE (K_OR K_REPLACE)? K_FUNCTION ifNotExists? nonSemicolonToken* K_AS SQUOTE nonSemicolonToken* SEMICOLON SQUOTE
+	| K_DROP K_FUNCTION ifExists? nonSemicolonToken*
+	| K_CREATE (K_OR K_REPLACE)? K_AGGREGATE ifNotExists? nonSemicolonToken*
+	| K_DROP K_AGGREGATE ifExists? nonSemicolonToken*
+
+	| K_CREATE K_TYPE ifNotExists? nonSemicolonToken*
+	| K_ALTER K_TYPE nonSemicolonToken*
+	| K_DROP K_TYPE ifExists? nonSemicolonToken*
+
+	| K_CREATE K_TRIGGER ifNotExists? nonSemicolonToken*
+	| K_DROP K_TRIGGER ifExists? nonSemicolonToken*
+	;
 
 columnDefinitionList
    : columnDefinition (COMMA columnDefinition)* (COMMA primaryKeyClause)?
@@ -97,7 +145,11 @@ primaryKeyKeywords
     : K_PRIMARY K_KEY
     ;
 
-ifNotExist
+ifExists
+	: K_IF K_EXISTS
+	;
+
+ifNotExists
    : K_IF K_NOT K_EXISTS
    ;
 
@@ -136,6 +188,7 @@ wihtTableOptions
 
 nonSemicolonToken
     : keyword
+	| SQUOTE
     | DQUOTE
     | DOT
     | COMMA
@@ -209,6 +262,8 @@ reservedKeyword
 	| K_USING
 	| K_WHERE
 	| K_WITH
+	| K_MATERIALIZED
+	| K_VIEW
 	;
 
 nonReservedKeyword

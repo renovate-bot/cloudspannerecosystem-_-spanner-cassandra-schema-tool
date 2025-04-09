@@ -150,10 +150,13 @@ K_VARINT       : 'VARINT'; // non-reserved
 K_WHERE        : 'WHERE'; // reserved
 K_WITH         : 'WITH'; // reserved
 K_WRITETIME    : 'WRITETIME'; // non-reserved
+K_MATERIALIZED : 'MATERIALIZED'; // reserved
+K_VIEW         : 'VIEW'; // reserved
 
 // Punctuation
 // When adding a new punctuation, add entry to nonSemicolonToken in the CqlParser.g4.
 SEMICOLON       : ';';
+SQUOTE          : '\'';
 DQUOTE          : '"';
 DOT             : '.';
 COMMA           : ',';

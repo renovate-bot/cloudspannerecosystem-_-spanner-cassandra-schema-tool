@@ -92,6 +92,8 @@ func checkGCPCredentials() error {
 //
 // TODO: Considering refactoring this function to a struct that has a getNextStmt function.
 // The streaming approach can reduce memory usage and it is crucial for handling large files.
+//
+// TODO: Address statements with semicolons (CREATE FUNCTION and BATCH DML).
 func parseCqlFile(filePath string) ([]string, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -247,11 +249,15 @@ func main() {
 	log.Printf("----------------------------------------------")
 	for _, stmt := range stmts {
 		log.Printf("[Cassandra statement]\n%s\n", stmt)
-		spannerCreateTableStmt, err := translator.ToSpannerCreateTableStmt(stmt, flags.databaseID)
+		spannerCreateTableStmt, ignored, err := translator.ToSpannerStmt(stmt, flags.databaseID)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
-		log.Printf("[Converted Spanner statement]\n%s\n", spannerCreateTableStmt)
+		if ignored {
+			log.Printf("[Skipping non-CREATE TABLE statement]\n")
+		} else {
+			log.Printf("[Converted Spanner statement]\n%s\n", spannerCreateTableStmt)
+		}
 		log.Printf("----------------------------------------------")
 		spannerCreateTableStmts = append(spannerCreateTableStmts, spannerCreateTableStmt)
 	}

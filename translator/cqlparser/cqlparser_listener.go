@@ -31,6 +31,9 @@ type CqlParserListener interface {
 	// EnterCreateTable is called when entering the createTable production.
 	EnterCreateTable(c *CreateTableContext)
 
+	// EnterUnsupportedStatement is called when entering the unsupportedStatement production.
+	EnterUnsupportedStatement(c *UnsupportedStatementContext)
+
 	// EnterColumnDefinitionList is called when entering the columnDefinitionList production.
 	EnterColumnDefinitionList(c *ColumnDefinitionListContext)
 
@@ -70,8 +73,11 @@ type CqlParserListener interface {
 	// EnterPrimaryKeyKeywords is called when entering the primaryKeyKeywords production.
 	EnterPrimaryKeyKeywords(c *PrimaryKeyKeywordsContext)
 
-	// EnterIfNotExist is called when entering the ifNotExist production.
-	EnterIfNotExist(c *IfNotExistContext)
+	// EnterIfExists is called when entering the ifExists production.
+	EnterIfExists(c *IfExistsContext)
+
+	// EnterIfNotExists is called when entering the ifNotExists production.
+	EnterIfNotExists(c *IfNotExistsContext)
 
 	// EnterCqlNativeType is called when entering the cqlNativeType production.
 	EnterCqlNativeType(c *CqlNativeTypeContext)
@@ -102,6 +108,9 @@ type CqlParserListener interface {
 
 	// ExitCreateTable is called when exiting the createTable production.
 	ExitCreateTable(c *CreateTableContext)
+
+	// ExitUnsupportedStatement is called when exiting the unsupportedStatement production.
+	ExitUnsupportedStatement(c *UnsupportedStatementContext)
 
 	// ExitColumnDefinitionList is called when exiting the columnDefinitionList production.
 	ExitColumnDefinitionList(c *ColumnDefinitionListContext)
@@ -142,8 +151,11 @@ type CqlParserListener interface {
 	// ExitPrimaryKeyKeywords is called when exiting the primaryKeyKeywords production.
 	ExitPrimaryKeyKeywords(c *PrimaryKeyKeywordsContext)
 
-	// ExitIfNotExist is called when exiting the ifNotExist production.
-	ExitIfNotExist(c *IfNotExistContext)
+	// ExitIfExists is called when exiting the ifExists production.
+	ExitIfExists(c *IfExistsContext)
+
+	// ExitIfNotExists is called when exiting the ifNotExists production.
+	ExitIfNotExists(c *IfNotExistsContext)
 
 	// ExitCqlNativeType is called when exiting the cqlNativeType production.
 	ExitCqlNativeType(c *CqlNativeTypeContext)
