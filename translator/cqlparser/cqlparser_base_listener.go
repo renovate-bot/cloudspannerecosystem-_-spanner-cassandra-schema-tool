@@ -113,6 +113,12 @@ func (s *BaseCqlParserListener) EnterGeneralIdentifier(ctx *GeneralIdentifierCon
 // ExitGeneralIdentifier is called when production generalIdentifier is exited.
 func (s *BaseCqlParserListener) ExitGeneralIdentifier(ctx *GeneralIdentifierContext) {}
 
+// EnterIdentifier is called when production identifier is entered.
+func (s *BaseCqlParserListener) EnterIdentifier(ctx *IdentifierContext) {}
+
+// ExitIdentifier is called when production identifier is exited.
+func (s *BaseCqlParserListener) ExitIdentifier(ctx *IdentifierContext) {}
+
 // EnterCqlType is called when production cqlType is entered.
 func (s *BaseCqlParserListener) EnterCqlType(ctx *CqlTypeContext) {}
 
@@ -154,3 +160,21 @@ func (s *BaseCqlParserListener) EnterNonSemicolonToken(ctx *NonSemicolonTokenCon
 
 // ExitNonSemicolonToken is called when production nonSemicolonToken is exited.
 func (s *BaseCqlParserListener) ExitNonSemicolonToken(ctx *NonSemicolonTokenContext) {}
+
+// EnterKeyword is called when production keyword is entered.
+func (s *BaseCqlParserListener) EnterKeyword(ctx *KeywordContext) {}
+
+// ExitKeyword is called when production keyword is exited.
+func (s *BaseCqlParserListener) ExitKeyword(ctx *KeywordContext) {}
+
+// EnterReservedKeyword is called when production reservedKeyword is entered.
+func (s *BaseCqlParserListener) EnterReservedKeyword(ctx *ReservedKeywordContext) {}
+
+// ExitReservedKeyword is called when production reservedKeyword is exited.
+func (s *BaseCqlParserListener) ExitReservedKeyword(ctx *ReservedKeywordContext) {}
+
+// EnterNonReservedKeyword is called when production nonReservedKeyword is entered.
+func (s *BaseCqlParserListener) EnterNonReservedKeyword(ctx *NonReservedKeywordContext) {}
+
+// ExitNonReservedKeyword is called when production nonReservedKeyword is exited.
+func (s *BaseCqlParserListener) ExitNonReservedKeyword(ctx *NonReservedKeywordContext) {}

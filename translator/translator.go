@@ -195,7 +195,7 @@ func ToSpannerCreateTableStmt(cqlStmt, databaseName string) (string, error) {
 	}
 
 	var spannerDdlBuilder strings.Builder
-	tableName := createTable.TableName().IDENTIFIER().GetText()
+	tableName := createTable.TableName().Identifier().GetText()
 	if createTable.IfNotExist() != nil {
 		spannerDdlBuilder.WriteString(fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (\n", tableName))
 	} else {

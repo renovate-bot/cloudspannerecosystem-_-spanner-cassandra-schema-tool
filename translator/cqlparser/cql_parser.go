@@ -47,95 +47,152 @@ var CqlParserParserStaticData struct {
 func cqlparserParserInit() {
 	staticData := &CqlParserParserStaticData
 	staticData.LiteralNames = []string{
-		"", "'CREATE'", "'TABLE'", "'IF'", "'NOT'", "'EXISTS'", "'PRIMARY'",
-		"'KEY'", "'WITH'", "'ASCII'", "'BIGINT'", "'BLOB'", "'BOOLEAN'", "'COUNTER'",
-		"'DATE'", "'DECIMAL'", "'DOUBLE'", "'FLOAT'", "'INET'", "'INT'", "'SMALLINT'",
-		"'TEXT'", "'TIME'", "'TIMESTAMP'", "'TIMEUUID'", "'TINYINT'", "'UUID'",
-		"'VARCHAR'", "'VARINT'", "'MAP'", "'SET'", "'LIST'", "';'", "'\"'",
-		"'.'", "','", "'('", "')'", "'<'", "'>'",
+		"", "'ADD'", "'AGGREGATE'", "'ALL'", "'ALLOW'", "'ALTER'", "'AND'",
+		"'APPLY'", "'AS'", "'ASC'", "'ASCII'", "'AUTHORIZE'", "'BATCH'", "'BEGIN'",
+		"'BIGINT'", "'BLOB'", "'BOOLEAN'", "'BY'", "'CALLED'", "'CLUSTERING'",
+		"'COLUMNFAMILY'", "'COMPACT'", "'CONTAINS'", "'COUNT'", "'COUNTER'",
+		"'CREATE'", "'CUSTOM'", "'DATE'", "'DECIMAL'", "'DELETE'", "'DESC'",
+		"'DESCRIBE'", "'DISTINCT'", "'DOUBLE'", "'DROP'", "'ENTRIES'", "'EXECUTE'",
+		"'EXISTS'", "'FILTERING'", "'FINALFUNC'", "'FLOAT'", "'FROM'", "'FROZEN'",
+		"'FULL'", "'FUNCTION'", "'FUNCTIONS'", "'GRANT'", "'IF'", "'IN'", "'INDEX'",
+		"'INET'", "'INFINITY'", "'INITCOND'", "'INPUT'", "'INSERT'", "'INT'",
+		"'INTO'", "'JSON'", "'KEY'", "'KEYS'", "'KEYSPACE'", "'KEYSPACES'",
+		"'LANGUAGE'", "'LIMIT'", "'LIST'", "'LOGIN'", "'MAP'", "'MODIFY'", "'NAN'",
+		"'NOLOGIN'", "'NORECURSIVE'", "'NOSUPERUSER'", "'NOT'", "'NULL'", "'OF'",
+		"'ON'", "'OPTIONS'", "'OR'", "'ORDER'", "'PASSWORD'", "'PERMISSION'",
+		"'PERMISSIONS'", "'PRIMARY'", "'RENAME'", "'REPLACE'", "'RETURNS'",
+		"'REVOKE'", "'ROLE'", "'ROLES'", "'SCHEMA'", "'SELECT'", "'SET'", "'SFUNC'",
+		"'SMALLINT'", "'STATIC'", "'STORAGE'", "'STYPE'", "'SUPERUSER'", "'TABLE'",
+		"'TEXT'", "'TIME'", "'TIMESTAMP'", "'TIMEUUID'", "'TINYINT'", "'TO'",
+		"'TOKEN'", "'TRIGGER'", "'TRUNCATE'", "'TTL'", "'TUPLE'", "'TYPE'",
+		"'UNLOGGED'", "'UPDATE'", "'USE'", "'USER'", "'USERS'", "'USING'", "'UUID'",
+		"'VALUES'", "'VARCHAR'", "'VARINT'", "'WHERE'", "'WITH'", "'WRITETIME'",
+		"';'", "'\"'", "'.'", "','", "'('", "')'", "'<'", "'>'",
 	}
 	staticData.SymbolicNames = []string{
-		"", "K_CREATE", "K_TABLE", "K_IF", "K_NOT", "K_EXISTS", "K_PRIMARY",
-		"K_KEY", "K_WITH", "K_ASCII", "K_BIGINT", "K_BLOB", "K_BOOLEAN", "K_COUNTER",
-		"K_DATE", "K_DECIMAL", "K_DOUBLE", "K_FLOAT", "K_INET", "K_INT", "K_SMALLINT",
-		"K_TEXT", "K_TIME", "K_TIMESTAMP", "K_TIMEUUID", "K_TINYINT", "K_UUID",
-		"K_VARCHAR", "K_VARINT", "K_MAP", "K_SET", "K_LIST", "SEMICOLON", "DQUOTE",
-		"DOT", "COMMA", "L_PAREN", "R_PAREN", "L_ANGLE_BRACKET", "R_ANGLE_BRACKET",
-		"IDENTIFIER", "IDENTIFIER_WITH_HYPHEN", "WS", "COMMENT", "MULTILINE_COMMENT",
-		"UNKNOWN",
+		"", "K_ADD", "K_AGGREGATE", "K_ALL", "K_ALLOW", "K_ALTER", "K_AND",
+		"K_APPLY", "K_AS", "K_ASC", "K_ASCII", "K_AUTHORIZE", "K_BATCH", "K_BEGIN",
+		"K_BIGINT", "K_BLOB", "K_BOOLEAN", "K_BY", "K_CALLED", "K_CLUSTERING",
+		"K_COLUMNFAMILY", "K_COMPACT", "K_CONTAINS", "K_COUNT", "K_COUNTER",
+		"K_CREATE", "K_CUSTOM", "K_DATE", "K_DECIMAL", "K_DELETE", "K_DESC",
+		"K_DESCRIBE", "K_DISTINCT", "K_DOUBLE", "K_DROP", "K_ENTRIES", "K_EXECUTE",
+		"K_EXISTS", "K_FILTERING", "K_FINALFUNC", "K_FLOAT", "K_FROM", "K_FROZEN",
+		"K_FULL", "K_FUNCTION", "K_FUNCTIONS", "K_GRANT", "K_IF", "K_IN", "K_INDEX",
+		"K_INET", "K_INFINITY", "K_INITCOND", "K_INPUT", "K_INSERT", "K_INT",
+		"K_INTO", "K_JSON", "K_KEY", "K_KEYS", "K_KEYSPACE", "K_KEYSPACES",
+		"K_LANGUAGE", "K_LIMIT", "K_LIST", "K_LOGIN", "K_MAP", "K_MODIFY", "K_NAN",
+		"K_NOLOGIN", "K_NORECURSIVE", "K_NOSUPERUSER", "K_NOT", "K_NULL", "K_OF",
+		"K_ON", "K_OPTIONS", "K_OR", "K_ORDER", "K_PASSWORD", "K_PERMISSION",
+		"K_PERMISSIONS", "K_PRIMARY", "K_RENAME", "K_REPLACE", "K_RETURNS",
+		"K_REVOKE", "K_ROLE", "K_ROLES", "K_SCHEMA", "K_SELECT", "K_SET", "K_SFUNC",
+		"K_SMALLINT", "K_STATIC", "K_STORAGE", "K_STYPE", "K_SUPERUSER", "K_TABLE",
+		"K_TEXT", "K_TIME", "K_TIMESTAMP", "K_TIMEUUID", "K_TINYINT", "K_TO",
+		"K_TOKEN", "K_TRIGGER", "K_TRUNCATE", "K_TTL", "K_TUPLE", "K_TYPE",
+		"K_UNLOGGED", "K_UPDATE", "K_USE", "K_USER", "K_USERS", "K_USING", "K_UUID",
+		"K_VALUES", "K_VARCHAR", "K_VARINT", "K_WHERE", "K_WITH", "K_WRITETIME",
+		"SEMICOLON", "DQUOTE", "DOT", "COMMA", "L_PAREN", "R_PAREN", "L_ANGLE_BRACKET",
+		"R_ANGLE_BRACKET", "IDENTIFIER", "IDENTIFIER_WITH_HYPHEN", "WS", "COMMENT",
+		"MULTILINE_COMMENT", "UNKNOWN",
 	}
 	staticData.RuleNames = []string{
 		"root", "cqlStatement", "createTable", "columnDefinitionList", "columnDefinition",
 		"primaryKeyClause", "primaryKey", "partitionKey", "clusteringColumns",
-		"columnName", "tableName", "keyspaceName", "generalIdentifier", "cqlType",
-		"primaryKeyKeywords", "ifNotExist", "cqlNativeType", "cqlCollectionType",
-		"wihtTableOptions", "nonSemicolonToken",
+		"columnName", "tableName", "keyspaceName", "generalIdentifier", "identifier",
+		"cqlType", "primaryKeyKeywords", "ifNotExist", "cqlNativeType", "cqlCollectionType",
+		"wihtTableOptions", "nonSemicolonToken", "keyword", "reservedKeyword",
+		"nonReservedKeyword",
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 45, 159, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 137, 192, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 2, 15, 7, 15,
-		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 1, 0, 1, 0, 3,
-		0, 43, 8, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 3, 2, 52, 8, 2,
-		1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 59, 8, 2, 1, 3, 1, 3, 1, 3, 5, 3, 64,
-		8, 3, 10, 3, 12, 3, 67, 9, 3, 1, 3, 1, 3, 3, 3, 71, 8, 3, 1, 4, 1, 4, 1,
-		4, 3, 4, 76, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 6, 1, 6, 1, 6, 3, 6,
-		86, 8, 6, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 5, 7, 93, 8, 7, 10, 7, 12, 7, 96,
-		9, 7, 1, 7, 1, 7, 3, 7, 100, 8, 7, 1, 8, 1, 8, 1, 8, 5, 8, 105, 8, 8, 10,
-		8, 12, 8, 108, 9, 8, 1, 9, 1, 9, 1, 10, 1, 10, 1, 10, 3, 10, 115, 8, 10,
-		1, 10, 1, 10, 1, 11, 1, 11, 1, 12, 1, 12, 1, 13, 1, 13, 3, 13, 125, 8,
-		13, 1, 14, 1, 14, 1, 14, 1, 15, 1, 15, 1, 15, 1, 15, 1, 16, 1, 16, 1, 17,
-		1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1,
-		17, 3, 17, 148, 8, 17, 1, 18, 1, 18, 5, 18, 152, 8, 18, 10, 18, 12, 18,
-		155, 9, 18, 1, 19, 1, 19, 1, 19, 0, 0, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16,
-		18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 0, 4, 1, 0, 40, 41, 1, 0, 9,
-		28, 1, 0, 30, 31, 3, 0, 1, 31, 33, 41, 45, 45, 152, 0, 40, 1, 0, 0, 0,
-		2, 46, 1, 0, 0, 0, 4, 48, 1, 0, 0, 0, 6, 60, 1, 0, 0, 0, 8, 72, 1, 0, 0,
-		0, 10, 77, 1, 0, 0, 0, 12, 82, 1, 0, 0, 0, 14, 99, 1, 0, 0, 0, 16, 101,
-		1, 0, 0, 0, 18, 109, 1, 0, 0, 0, 20, 114, 1, 0, 0, 0, 22, 118, 1, 0, 0,
-		0, 24, 120, 1, 0, 0, 0, 26, 124, 1, 0, 0, 0, 28, 126, 1, 0, 0, 0, 30, 129,
-		1, 0, 0, 0, 32, 133, 1, 0, 0, 0, 34, 147, 1, 0, 0, 0, 36, 149, 1, 0, 0,
-		0, 38, 156, 1, 0, 0, 0, 40, 42, 3, 2, 1, 0, 41, 43, 5, 32, 0, 0, 42, 41,
-		1, 0, 0, 0, 42, 43, 1, 0, 0, 0, 43, 44, 1, 0, 0, 0, 44, 45, 5, 0, 0, 1,
-		45, 1, 1, 0, 0, 0, 46, 47, 3, 4, 2, 0, 47, 3, 1, 0, 0, 0, 48, 49, 5, 1,
-		0, 0, 49, 51, 5, 2, 0, 0, 50, 52, 3, 30, 15, 0, 51, 50, 1, 0, 0, 0, 51,
-		52, 1, 0, 0, 0, 52, 53, 1, 0, 0, 0, 53, 54, 3, 20, 10, 0, 54, 55, 5, 36,
-		0, 0, 55, 56, 3, 6, 3, 0, 56, 58, 5, 37, 0, 0, 57, 59, 3, 36, 18, 0, 58,
-		57, 1, 0, 0, 0, 58, 59, 1, 0, 0, 0, 59, 5, 1, 0, 0, 0, 60, 65, 3, 8, 4,
-		0, 61, 62, 5, 35, 0, 0, 62, 64, 3, 8, 4, 0, 63, 61, 1, 0, 0, 0, 64, 67,
-		1, 0, 0, 0, 65, 63, 1, 0, 0, 0, 65, 66, 1, 0, 0, 0, 66, 70, 1, 0, 0, 0,
-		67, 65, 1, 0, 0, 0, 68, 69, 5, 35, 0, 0, 69, 71, 3, 10, 5, 0, 70, 68, 1,
-		0, 0, 0, 70, 71, 1, 0, 0, 0, 71, 7, 1, 0, 0, 0, 72, 73, 3, 18, 9, 0, 73,
-		75, 3, 26, 13, 0, 74, 76, 3, 28, 14, 0, 75, 74, 1, 0, 0, 0, 75, 76, 1,
-		0, 0, 0, 76, 9, 1, 0, 0, 0, 77, 78, 3, 28, 14, 0, 78, 79, 5, 36, 0, 0,
-		79, 80, 3, 12, 6, 0, 80, 81, 5, 37, 0, 0, 81, 11, 1, 0, 0, 0, 82, 85, 3,
-		14, 7, 0, 83, 84, 5, 35, 0, 0, 84, 86, 3, 16, 8, 0, 85, 83, 1, 0, 0, 0,
-		85, 86, 1, 0, 0, 0, 86, 13, 1, 0, 0, 0, 87, 100, 3, 18, 9, 0, 88, 89, 5,
-		36, 0, 0, 89, 94, 3, 18, 9, 0, 90, 91, 5, 35, 0, 0, 91, 93, 3, 18, 9, 0,
-		92, 90, 1, 0, 0, 0, 93, 96, 1, 0, 0, 0, 94, 92, 1, 0, 0, 0, 94, 95, 1,
-		0, 0, 0, 95, 97, 1, 0, 0, 0, 96, 94, 1, 0, 0, 0, 97, 98, 5, 37, 0, 0, 98,
-		100, 1, 0, 0, 0, 99, 87, 1, 0, 0, 0, 99, 88, 1, 0, 0, 0, 100, 15, 1, 0,
-		0, 0, 101, 106, 3, 18, 9, 0, 102, 103, 5, 35, 0, 0, 103, 105, 3, 18, 9,
-		0, 104, 102, 1, 0, 0, 0, 105, 108, 1, 0, 0, 0, 106, 104, 1, 0, 0, 0, 106,
-		107, 1, 0, 0, 0, 107, 17, 1, 0, 0, 0, 108, 106, 1, 0, 0, 0, 109, 110, 5,
-		40, 0, 0, 110, 19, 1, 0, 0, 0, 111, 112, 3, 22, 11, 0, 112, 113, 5, 34,
-		0, 0, 113, 115, 1, 0, 0, 0, 114, 111, 1, 0, 0, 0, 114, 115, 1, 0, 0, 0,
-		115, 116, 1, 0, 0, 0, 116, 117, 5, 40, 0, 0, 117, 21, 1, 0, 0, 0, 118,
-		119, 3, 24, 12, 0, 119, 23, 1, 0, 0, 0, 120, 121, 7, 0, 0, 0, 121, 25,
-		1, 0, 0, 0, 122, 125, 3, 32, 16, 0, 123, 125, 3, 34, 17, 0, 124, 122, 1,
-		0, 0, 0, 124, 123, 1, 0, 0, 0, 125, 27, 1, 0, 0, 0, 126, 127, 5, 6, 0,
-		0, 127, 128, 5, 7, 0, 0, 128, 29, 1, 0, 0, 0, 129, 130, 5, 3, 0, 0, 130,
-		131, 5, 4, 0, 0, 131, 132, 5, 5, 0, 0, 132, 31, 1, 0, 0, 0, 133, 134, 7,
-		1, 0, 0, 134, 33, 1, 0, 0, 0, 135, 136, 5, 29, 0, 0, 136, 137, 5, 38, 0,
-		0, 137, 138, 3, 32, 16, 0, 138, 139, 5, 35, 0, 0, 139, 140, 3, 32, 16,
-		0, 140, 141, 5, 39, 0, 0, 141, 148, 1, 0, 0, 0, 142, 143, 7, 2, 0, 0, 143,
-		144, 5, 38, 0, 0, 144, 145, 3, 32, 16, 0, 145, 146, 5, 39, 0, 0, 146, 148,
-		1, 0, 0, 0, 147, 135, 1, 0, 0, 0, 147, 142, 1, 0, 0, 0, 148, 35, 1, 0,
-		0, 0, 149, 153, 5, 8, 0, 0, 150, 152, 3, 38, 19, 0, 151, 150, 1, 0, 0,
-		0, 152, 155, 1, 0, 0, 0, 153, 151, 1, 0, 0, 0, 153, 154, 1, 0, 0, 0, 154,
-		37, 1, 0, 0, 0, 155, 153, 1, 0, 0, 0, 156, 157, 7, 3, 0, 0, 157, 39, 1,
-		0, 0, 0, 14, 42, 51, 58, 65, 70, 75, 85, 94, 99, 106, 114, 124, 147, 153,
+		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7, 20, 2,
+		21, 7, 21, 2, 22, 7, 22, 2, 23, 7, 23, 1, 0, 1, 0, 3, 0, 51, 8, 0, 1, 0,
+		1, 0, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 3, 2, 60, 8, 2, 1, 2, 1, 2, 1, 2, 1,
+		2, 1, 2, 3, 2, 67, 8, 2, 1, 3, 1, 3, 1, 3, 5, 3, 72, 8, 3, 10, 3, 12, 3,
+		75, 9, 3, 1, 3, 1, 3, 3, 3, 79, 8, 3, 1, 4, 1, 4, 1, 4, 3, 4, 84, 8, 4,
+		1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 6, 1, 6, 1, 6, 3, 6, 94, 8, 6, 1, 7, 1,
+		7, 1, 7, 1, 7, 1, 7, 5, 7, 101, 8, 7, 10, 7, 12, 7, 104, 9, 7, 1, 7, 1,
+		7, 3, 7, 108, 8, 7, 1, 8, 1, 8, 1, 8, 5, 8, 113, 8, 8, 10, 8, 12, 8, 116,
+		9, 8, 1, 9, 1, 9, 1, 10, 1, 10, 1, 10, 3, 10, 123, 8, 10, 1, 10, 1, 10,
+		1, 11, 1, 11, 1, 12, 1, 12, 3, 12, 131, 8, 12, 1, 13, 1, 13, 3, 13, 135,
+		8, 13, 1, 14, 1, 14, 3, 14, 139, 8, 14, 1, 15, 1, 15, 1, 15, 1, 16, 1,
+		16, 1, 16, 1, 16, 1, 17, 1, 17, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18,
+		1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 3, 18, 162, 8, 18, 1, 19, 1,
+		19, 5, 19, 166, 8, 19, 10, 19, 12, 19, 169, 9, 19, 1, 20, 1, 20, 1, 20,
+		1, 20, 1, 20, 1, 20, 1, 20, 1, 20, 1, 20, 1, 20, 1, 20, 3, 20, 182, 8,
+		20, 1, 21, 1, 21, 3, 21, 186, 8, 21, 1, 22, 1, 22, 1, 23, 1, 23, 1, 23,
+		0, 0, 24, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32,
+		34, 36, 38, 40, 42, 44, 46, 0, 4, 12, 0, 10, 10, 14, 16, 24, 24, 27, 28,
+		33, 33, 40, 40, 50, 50, 55, 55, 93, 93, 99, 103, 117, 117, 119, 120, 2,
+		0, 64, 64, 91, 91, 30, 0, 1, 1, 4, 7, 9, 9, 11, 13, 17, 17, 20, 20, 25,
+		25, 29, 31, 34, 36, 41, 41, 43, 43, 46, 49, 51, 51, 54, 54, 56, 56, 60,
+		60, 63, 63, 67, 68, 70, 70, 72, 75, 77, 78, 82, 84, 86, 86, 89, 91, 98,
+		98, 104, 105, 107, 107, 111, 113, 116, 116, 121, 122, 30, 0, 2, 3, 8, 8,
+		10, 10, 14, 16, 18, 19, 21, 24, 26, 28, 32, 33, 37, 40, 42, 42, 44, 45,
+		50, 50, 52, 53, 55, 55, 57, 59, 61, 62, 64, 66, 69, 69, 71, 71, 76, 76,
+		79, 81, 85, 85, 87, 88, 92, 97, 99, 103, 106, 106, 108, 110, 114, 115,
+		117, 120, 123, 123, 194, 0, 48, 1, 0, 0, 0, 2, 54, 1, 0, 0, 0, 4, 56, 1,
+		0, 0, 0, 6, 68, 1, 0, 0, 0, 8, 80, 1, 0, 0, 0, 10, 85, 1, 0, 0, 0, 12,
+		90, 1, 0, 0, 0, 14, 107, 1, 0, 0, 0, 16, 109, 1, 0, 0, 0, 18, 117, 1, 0,
+		0, 0, 20, 122, 1, 0, 0, 0, 22, 126, 1, 0, 0, 0, 24, 130, 1, 0, 0, 0, 26,
+		134, 1, 0, 0, 0, 28, 138, 1, 0, 0, 0, 30, 140, 1, 0, 0, 0, 32, 143, 1,
+		0, 0, 0, 34, 147, 1, 0, 0, 0, 36, 161, 1, 0, 0, 0, 38, 163, 1, 0, 0, 0,
+		40, 181, 1, 0, 0, 0, 42, 185, 1, 0, 0, 0, 44, 187, 1, 0, 0, 0, 46, 189,
+		1, 0, 0, 0, 48, 50, 3, 2, 1, 0, 49, 51, 5, 124, 0, 0, 50, 49, 1, 0, 0,
+		0, 50, 51, 1, 0, 0, 0, 51, 52, 1, 0, 0, 0, 52, 53, 5, 0, 0, 1, 53, 1, 1,
+		0, 0, 0, 54, 55, 3, 4, 2, 0, 55, 3, 1, 0, 0, 0, 56, 57, 5, 25, 0, 0, 57,
+		59, 5, 98, 0, 0, 58, 60, 3, 32, 16, 0, 59, 58, 1, 0, 0, 0, 59, 60, 1, 0,
+		0, 0, 60, 61, 1, 0, 0, 0, 61, 62, 3, 20, 10, 0, 62, 63, 5, 128, 0, 0, 63,
+		64, 3, 6, 3, 0, 64, 66, 5, 129, 0, 0, 65, 67, 3, 38, 19, 0, 66, 65, 1,
+		0, 0, 0, 66, 67, 1, 0, 0, 0, 67, 5, 1, 0, 0, 0, 68, 73, 3, 8, 4, 0, 69,
+		70, 5, 127, 0, 0, 70, 72, 3, 8, 4, 0, 71, 69, 1, 0, 0, 0, 72, 75, 1, 0,
+		0, 0, 73, 71, 1, 0, 0, 0, 73, 74, 1, 0, 0, 0, 74, 78, 1, 0, 0, 0, 75, 73,
+		1, 0, 0, 0, 76, 77, 5, 127, 0, 0, 77, 79, 3, 10, 5, 0, 78, 76, 1, 0, 0,
+		0, 78, 79, 1, 0, 0, 0, 79, 7, 1, 0, 0, 0, 80, 81, 3, 18, 9, 0, 81, 83,
+		3, 28, 14, 0, 82, 84, 3, 30, 15, 0, 83, 82, 1, 0, 0, 0, 83, 84, 1, 0, 0,
+		0, 84, 9, 1, 0, 0, 0, 85, 86, 3, 30, 15, 0, 86, 87, 5, 128, 0, 0, 87, 88,
+		3, 12, 6, 0, 88, 89, 5, 129, 0, 0, 89, 11, 1, 0, 0, 0, 90, 93, 3, 14, 7,
+		0, 91, 92, 5, 127, 0, 0, 92, 94, 3, 16, 8, 0, 93, 91, 1, 0, 0, 0, 93, 94,
+		1, 0, 0, 0, 94, 13, 1, 0, 0, 0, 95, 108, 3, 18, 9, 0, 96, 97, 5, 128, 0,
+		0, 97, 102, 3, 18, 9, 0, 98, 99, 5, 127, 0, 0, 99, 101, 3, 18, 9, 0, 100,
+		98, 1, 0, 0, 0, 101, 104, 1, 0, 0, 0, 102, 100, 1, 0, 0, 0, 102, 103, 1,
+		0, 0, 0, 103, 105, 1, 0, 0, 0, 104, 102, 1, 0, 0, 0, 105, 106, 5, 129,
+		0, 0, 106, 108, 1, 0, 0, 0, 107, 95, 1, 0, 0, 0, 107, 96, 1, 0, 0, 0, 108,
+		15, 1, 0, 0, 0, 109, 114, 3, 18, 9, 0, 110, 111, 5, 127, 0, 0, 111, 113,
+		3, 18, 9, 0, 112, 110, 1, 0, 0, 0, 113, 116, 1, 0, 0, 0, 114, 112, 1, 0,
+		0, 0, 114, 115, 1, 0, 0, 0, 115, 17, 1, 0, 0, 0, 116, 114, 1, 0, 0, 0,
+		117, 118, 3, 26, 13, 0, 118, 19, 1, 0, 0, 0, 119, 120, 3, 22, 11, 0, 120,
+		121, 5, 126, 0, 0, 121, 123, 1, 0, 0, 0, 122, 119, 1, 0, 0, 0, 122, 123,
+		1, 0, 0, 0, 123, 124, 1, 0, 0, 0, 124, 125, 3, 26, 13, 0, 125, 21, 1, 0,
+		0, 0, 126, 127, 3, 24, 12, 0, 127, 23, 1, 0, 0, 0, 128, 131, 5, 133, 0,
+		0, 129, 131, 3, 26, 13, 0, 130, 128, 1, 0, 0, 0, 130, 129, 1, 0, 0, 0,
+		131, 25, 1, 0, 0, 0, 132, 135, 3, 46, 23, 0, 133, 135, 5, 132, 0, 0, 134,
+		132, 1, 0, 0, 0, 134, 133, 1, 0, 0, 0, 135, 27, 1, 0, 0, 0, 136, 139, 3,
+		34, 17, 0, 137, 139, 3, 36, 18, 0, 138, 136, 1, 0, 0, 0, 138, 137, 1, 0,
+		0, 0, 139, 29, 1, 0, 0, 0, 140, 141, 5, 82, 0, 0, 141, 142, 5, 58, 0, 0,
+		142, 31, 1, 0, 0, 0, 143, 144, 5, 47, 0, 0, 144, 145, 5, 72, 0, 0, 145,
+		146, 5, 37, 0, 0, 146, 33, 1, 0, 0, 0, 147, 148, 7, 0, 0, 0, 148, 35, 1,
+		0, 0, 0, 149, 150, 5, 66, 0, 0, 150, 151, 5, 130, 0, 0, 151, 152, 3, 34,
+		17, 0, 152, 153, 5, 127, 0, 0, 153, 154, 3, 34, 17, 0, 154, 155, 5, 131,
+		0, 0, 155, 162, 1, 0, 0, 0, 156, 157, 7, 1, 0, 0, 157, 158, 5, 130, 0,
+		0, 158, 159, 3, 34, 17, 0, 159, 160, 5, 131, 0, 0, 160, 162, 1, 0, 0, 0,
+		161, 149, 1, 0, 0, 0, 161, 156, 1, 0, 0, 0, 162, 37, 1, 0, 0, 0, 163, 167,
+		5, 122, 0, 0, 164, 166, 3, 40, 20, 0, 165, 164, 1, 0, 0, 0, 166, 169, 1,
+		0, 0, 0, 167, 165, 1, 0, 0, 0, 167, 168, 1, 0, 0, 0, 168, 39, 1, 0, 0,
+		0, 169, 167, 1, 0, 0, 0, 170, 182, 3, 42, 21, 0, 171, 182, 5, 125, 0, 0,
+		172, 182, 5, 126, 0, 0, 173, 182, 5, 127, 0, 0, 174, 182, 5, 128, 0, 0,
+		175, 182, 5, 129, 0, 0, 176, 182, 5, 130, 0, 0, 177, 182, 5, 131, 0, 0,
+		178, 182, 5, 132, 0, 0, 179, 182, 5, 133, 0, 0, 180, 182, 5, 137, 0, 0,
+		181, 170, 1, 0, 0, 0, 181, 171, 1, 0, 0, 0, 181, 172, 1, 0, 0, 0, 181,
+		173, 1, 0, 0, 0, 181, 174, 1, 0, 0, 0, 181, 175, 1, 0, 0, 0, 181, 176,
+		1, 0, 0, 0, 181, 177, 1, 0, 0, 0, 181, 178, 1, 0, 0, 0, 181, 179, 1, 0,
+		0, 0, 181, 180, 1, 0, 0, 0, 182, 41, 1, 0, 0, 0, 183, 186, 3, 44, 22, 0,
+		184, 186, 3, 46, 23, 0, 185, 183, 1, 0, 0, 0, 185, 184, 1, 0, 0, 0, 186,
+		43, 1, 0, 0, 0, 187, 188, 7, 2, 0, 0, 188, 45, 1, 0, 0, 0, 189, 190, 7,
+		3, 0, 0, 190, 47, 1, 0, 0, 0, 18, 50, 59, 66, 73, 78, 83, 93, 102, 107,
+		114, 122, 130, 134, 138, 161, 167, 181, 185,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -174,51 +231,143 @@ func NewCqlParser(input antlr.TokenStream) *CqlParser {
 // CqlParser tokens.
 const (
 	CqlParserEOF                    = antlr.TokenEOF
-	CqlParserK_CREATE               = 1
-	CqlParserK_TABLE                = 2
-	CqlParserK_IF                   = 3
-	CqlParserK_NOT                  = 4
-	CqlParserK_EXISTS               = 5
-	CqlParserK_PRIMARY              = 6
-	CqlParserK_KEY                  = 7
-	CqlParserK_WITH                 = 8
-	CqlParserK_ASCII                = 9
-	CqlParserK_BIGINT               = 10
-	CqlParserK_BLOB                 = 11
-	CqlParserK_BOOLEAN              = 12
-	CqlParserK_COUNTER              = 13
-	CqlParserK_DATE                 = 14
-	CqlParserK_DECIMAL              = 15
-	CqlParserK_DOUBLE               = 16
-	CqlParserK_FLOAT                = 17
-	CqlParserK_INET                 = 18
-	CqlParserK_INT                  = 19
-	CqlParserK_SMALLINT             = 20
-	CqlParserK_TEXT                 = 21
-	CqlParserK_TIME                 = 22
-	CqlParserK_TIMESTAMP            = 23
-	CqlParserK_TIMEUUID             = 24
-	CqlParserK_TINYINT              = 25
-	CqlParserK_UUID                 = 26
-	CqlParserK_VARCHAR              = 27
-	CqlParserK_VARINT               = 28
-	CqlParserK_MAP                  = 29
-	CqlParserK_SET                  = 30
-	CqlParserK_LIST                 = 31
-	CqlParserSEMICOLON              = 32
-	CqlParserDQUOTE                 = 33
-	CqlParserDOT                    = 34
-	CqlParserCOMMA                  = 35
-	CqlParserL_PAREN                = 36
-	CqlParserR_PAREN                = 37
-	CqlParserL_ANGLE_BRACKET        = 38
-	CqlParserR_ANGLE_BRACKET        = 39
-	CqlParserIDENTIFIER             = 40
-	CqlParserIDENTIFIER_WITH_HYPHEN = 41
-	CqlParserWS                     = 42
-	CqlParserCOMMENT                = 43
-	CqlParserMULTILINE_COMMENT      = 44
-	CqlParserUNKNOWN                = 45
+	CqlParserK_ADD                  = 1
+	CqlParserK_AGGREGATE            = 2
+	CqlParserK_ALL                  = 3
+	CqlParserK_ALLOW                = 4
+	CqlParserK_ALTER                = 5
+	CqlParserK_AND                  = 6
+	CqlParserK_APPLY                = 7
+	CqlParserK_AS                   = 8
+	CqlParserK_ASC                  = 9
+	CqlParserK_ASCII                = 10
+	CqlParserK_AUTHORIZE            = 11
+	CqlParserK_BATCH                = 12
+	CqlParserK_BEGIN                = 13
+	CqlParserK_BIGINT               = 14
+	CqlParserK_BLOB                 = 15
+	CqlParserK_BOOLEAN              = 16
+	CqlParserK_BY                   = 17
+	CqlParserK_CALLED               = 18
+	CqlParserK_CLUSTERING           = 19
+	CqlParserK_COLUMNFAMILY         = 20
+	CqlParserK_COMPACT              = 21
+	CqlParserK_CONTAINS             = 22
+	CqlParserK_COUNT                = 23
+	CqlParserK_COUNTER              = 24
+	CqlParserK_CREATE               = 25
+	CqlParserK_CUSTOM               = 26
+	CqlParserK_DATE                 = 27
+	CqlParserK_DECIMAL              = 28
+	CqlParserK_DELETE               = 29
+	CqlParserK_DESC                 = 30
+	CqlParserK_DESCRIBE             = 31
+	CqlParserK_DISTINCT             = 32
+	CqlParserK_DOUBLE               = 33
+	CqlParserK_DROP                 = 34
+	CqlParserK_ENTRIES              = 35
+	CqlParserK_EXECUTE              = 36
+	CqlParserK_EXISTS               = 37
+	CqlParserK_FILTERING            = 38
+	CqlParserK_FINALFUNC            = 39
+	CqlParserK_FLOAT                = 40
+	CqlParserK_FROM                 = 41
+	CqlParserK_FROZEN               = 42
+	CqlParserK_FULL                 = 43
+	CqlParserK_FUNCTION             = 44
+	CqlParserK_FUNCTIONS            = 45
+	CqlParserK_GRANT                = 46
+	CqlParserK_IF                   = 47
+	CqlParserK_IN                   = 48
+	CqlParserK_INDEX                = 49
+	CqlParserK_INET                 = 50
+	CqlParserK_INFINITY             = 51
+	CqlParserK_INITCOND             = 52
+	CqlParserK_INPUT                = 53
+	CqlParserK_INSERT               = 54
+	CqlParserK_INT                  = 55
+	CqlParserK_INTO                 = 56
+	CqlParserK_JSON                 = 57
+	CqlParserK_KEY                  = 58
+	CqlParserK_KEYS                 = 59
+	CqlParserK_KEYSPACE             = 60
+	CqlParserK_KEYSPACES            = 61
+	CqlParserK_LANGUAGE             = 62
+	CqlParserK_LIMIT                = 63
+	CqlParserK_LIST                 = 64
+	CqlParserK_LOGIN                = 65
+	CqlParserK_MAP                  = 66
+	CqlParserK_MODIFY               = 67
+	CqlParserK_NAN                  = 68
+	CqlParserK_NOLOGIN              = 69
+	CqlParserK_NORECURSIVE          = 70
+	CqlParserK_NOSUPERUSER          = 71
+	CqlParserK_NOT                  = 72
+	CqlParserK_NULL                 = 73
+	CqlParserK_OF                   = 74
+	CqlParserK_ON                   = 75
+	CqlParserK_OPTIONS              = 76
+	CqlParserK_OR                   = 77
+	CqlParserK_ORDER                = 78
+	CqlParserK_PASSWORD             = 79
+	CqlParserK_PERMISSION           = 80
+	CqlParserK_PERMISSIONS          = 81
+	CqlParserK_PRIMARY              = 82
+	CqlParserK_RENAME               = 83
+	CqlParserK_REPLACE              = 84
+	CqlParserK_RETURNS              = 85
+	CqlParserK_REVOKE               = 86
+	CqlParserK_ROLE                 = 87
+	CqlParserK_ROLES                = 88
+	CqlParserK_SCHEMA               = 89
+	CqlParserK_SELECT               = 90
+	CqlParserK_SET                  = 91
+	CqlParserK_SFUNC                = 92
+	CqlParserK_SMALLINT             = 93
+	CqlParserK_STATIC               = 94
+	CqlParserK_STORAGE              = 95
+	CqlParserK_STYPE                = 96
+	CqlParserK_SUPERUSER            = 97
+	CqlParserK_TABLE                = 98
+	CqlParserK_TEXT                 = 99
+	CqlParserK_TIME                 = 100
+	CqlParserK_TIMESTAMP            = 101
+	CqlParserK_TIMEUUID             = 102
+	CqlParserK_TINYINT              = 103
+	CqlParserK_TO                   = 104
+	CqlParserK_TOKEN                = 105
+	CqlParserK_TRIGGER              = 106
+	CqlParserK_TRUNCATE             = 107
+	CqlParserK_TTL                  = 108
+	CqlParserK_TUPLE                = 109
+	CqlParserK_TYPE                 = 110
+	CqlParserK_UNLOGGED             = 111
+	CqlParserK_UPDATE               = 112
+	CqlParserK_USE                  = 113
+	CqlParserK_USER                 = 114
+	CqlParserK_USERS                = 115
+	CqlParserK_USING                = 116
+	CqlParserK_UUID                 = 117
+	CqlParserK_VALUES               = 118
+	CqlParserK_VARCHAR              = 119
+	CqlParserK_VARINT               = 120
+	CqlParserK_WHERE                = 121
+	CqlParserK_WITH                 = 122
+	CqlParserK_WRITETIME            = 123
+	CqlParserSEMICOLON              = 124
+	CqlParserDQUOTE                 = 125
+	CqlParserDOT                    = 126
+	CqlParserCOMMA                  = 127
+	CqlParserL_PAREN                = 128
+	CqlParserR_PAREN                = 129
+	CqlParserL_ANGLE_BRACKET        = 130
+	CqlParserR_ANGLE_BRACKET        = 131
+	CqlParserIDENTIFIER             = 132
+	CqlParserIDENTIFIER_WITH_HYPHEN = 133
+	CqlParserWS                     = 134
+	CqlParserCOMMENT                = 135
+	CqlParserMULTILINE_COMMENT      = 136
+	CqlParserUNKNOWN                = 137
 )
 
 // CqlParser rules.
@@ -236,13 +385,17 @@ const (
 	CqlParserRULE_tableName            = 10
 	CqlParserRULE_keyspaceName         = 11
 	CqlParserRULE_generalIdentifier    = 12
-	CqlParserRULE_cqlType              = 13
-	CqlParserRULE_primaryKeyKeywords   = 14
-	CqlParserRULE_ifNotExist           = 15
-	CqlParserRULE_cqlNativeType        = 16
-	CqlParserRULE_cqlCollectionType    = 17
-	CqlParserRULE_wihtTableOptions     = 18
-	CqlParserRULE_nonSemicolonToken    = 19
+	CqlParserRULE_identifier           = 13
+	CqlParserRULE_cqlType              = 14
+	CqlParserRULE_primaryKeyKeywords   = 15
+	CqlParserRULE_ifNotExist           = 16
+	CqlParserRULE_cqlNativeType        = 17
+	CqlParserRULE_cqlCollectionType    = 18
+	CqlParserRULE_wihtTableOptions     = 19
+	CqlParserRULE_nonSemicolonToken    = 20
+	CqlParserRULE_keyword              = 21
+	CqlParserRULE_reservedKeyword      = 22
+	CqlParserRULE_nonReservedKeyword   = 23
 )
 
 // IRootContext is an interface to support dynamic dispatch.
@@ -344,10 +497,10 @@ func (p *CqlParser) Root() (localctx IRootContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(40)
+		p.SetState(48)
 		p.CqlStatement()
 	}
-	p.SetState(42)
+	p.SetState(50)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -356,7 +509,7 @@ func (p *CqlParser) Root() (localctx IRootContext) {
 
 	if _la == CqlParserSEMICOLON {
 		{
-			p.SetState(41)
+			p.SetState(49)
 			p.Match(CqlParserSEMICOLON)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -366,7 +519,7 @@ func (p *CqlParser) Root() (localctx IRootContext) {
 
 	}
 	{
-		p.SetState(44)
+		p.SetState(52)
 		p.Match(CqlParserEOF)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -474,7 +627,7 @@ func (p *CqlParser) CqlStatement() (localctx ICqlStatementContext) {
 	p.EnterRule(localctx, 2, CqlParserRULE_cqlStatement)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(46)
+		p.SetState(54)
 		p.CreateTable()
 	}
 
@@ -651,7 +804,7 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(48)
+		p.SetState(56)
 		p.Match(CqlParserK_CREATE)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -659,14 +812,14 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 		}
 	}
 	{
-		p.SetState(49)
+		p.SetState(57)
 		p.Match(CqlParserK_TABLE)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(51)
+	p.SetState(59)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -675,17 +828,17 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 
 	if _la == CqlParserK_IF {
 		{
-			p.SetState(50)
+			p.SetState(58)
 			p.IfNotExist()
 		}
 
 	}
 	{
-		p.SetState(53)
+		p.SetState(61)
 		p.TableName()
 	}
 	{
-		p.SetState(54)
+		p.SetState(62)
 		p.Match(CqlParserL_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -693,18 +846,18 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 		}
 	}
 	{
-		p.SetState(55)
+		p.SetState(63)
 		p.ColumnDefinitionList()
 	}
 	{
-		p.SetState(56)
+		p.SetState(64)
 		p.Match(CqlParserR_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(58)
+	p.SetState(66)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -713,7 +866,7 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 
 	if _la == CqlParserK_WITH {
 		{
-			p.SetState(57)
+			p.SetState(65)
 			p.WihtTableOptions()
 		}
 
@@ -876,10 +1029,10 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(60)
+		p.SetState(68)
 		p.ColumnDefinition()
 	}
-	p.SetState(65)
+	p.SetState(73)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -891,7 +1044,7 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			{
-				p.SetState(61)
+				p.SetState(69)
 				p.Match(CqlParserCOMMA)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -899,12 +1052,12 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 				}
 			}
 			{
-				p.SetState(62)
+				p.SetState(70)
 				p.ColumnDefinition()
 			}
 
 		}
-		p.SetState(67)
+		p.SetState(75)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -914,7 +1067,7 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 			goto errorExit
 		}
 	}
-	p.SetState(70)
+	p.SetState(78)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -923,7 +1076,7 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 
 	if _la == CqlParserCOMMA {
 		{
-			p.SetState(68)
+			p.SetState(76)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -931,7 +1084,7 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 			}
 		}
 		{
-			p.SetState(69)
+			p.SetState(77)
 			p.PrimaryKeyClause()
 		}
 
@@ -1073,14 +1226,14 @@ func (p *CqlParser) ColumnDefinition() (localctx IColumnDefinitionContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(72)
+		p.SetState(80)
 		p.ColumnName()
 	}
 	{
-		p.SetState(73)
+		p.SetState(81)
 		p.CqlType()
 	}
-	p.SetState(75)
+	p.SetState(83)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1089,7 +1242,7 @@ func (p *CqlParser) ColumnDefinition() (localctx IColumnDefinitionContext) {
 
 	if _la == CqlParserK_PRIMARY {
 		{
-			p.SetState(74)
+			p.SetState(82)
 			p.PrimaryKeyKeywords()
 		}
 
@@ -1222,11 +1375,11 @@ func (p *CqlParser) PrimaryKeyClause() (localctx IPrimaryKeyClauseContext) {
 	p.EnterRule(localctx, 10, CqlParserRULE_primaryKeyClause)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(77)
+		p.SetState(85)
 		p.PrimaryKeyKeywords()
 	}
 	{
-		p.SetState(78)
+		p.SetState(86)
 		p.Match(CqlParserL_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1234,11 +1387,11 @@ func (p *CqlParser) PrimaryKeyClause() (localctx IPrimaryKeyClauseContext) {
 		}
 	}
 	{
-		p.SetState(79)
+		p.SetState(87)
 		p.PrimaryKey()
 	}
 	{
-		p.SetState(80)
+		p.SetState(88)
 		p.Match(CqlParserR_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1370,10 +1523,10 @@ func (p *CqlParser) PrimaryKey() (localctx IPrimaryKeyContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(82)
+		p.SetState(90)
 		p.PartitionKey()
 	}
-	p.SetState(85)
+	p.SetState(93)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1382,7 +1535,7 @@ func (p *CqlParser) PrimaryKey() (localctx IPrimaryKeyContext) {
 
 	if _la == CqlParserCOMMA {
 		{
-			p.SetState(83)
+			p.SetState(91)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1390,7 +1543,7 @@ func (p *CqlParser) PrimaryKey() (localctx IPrimaryKeyContext) {
 			}
 		}
 		{
-			p.SetState(84)
+			p.SetState(92)
 			p.ClusteringColumns()
 		}
 
@@ -1542,24 +1695,24 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 	p.EnterRule(localctx, 14, CqlParserRULE_partitionKey)
 	var _la int
 
-	p.SetState(99)
+	p.SetState(107)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 
 	switch p.GetTokenStream().LA(1) {
-	case CqlParserIDENTIFIER:
+	case CqlParserK_AGGREGATE, CqlParserK_ALL, CqlParserK_AS, CqlParserK_ASCII, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_CALLED, CqlParserK_CLUSTERING, CqlParserK_COMPACT, CqlParserK_CONTAINS, CqlParserK_COUNT, CqlParserK_COUNTER, CqlParserK_CUSTOM, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DISTINCT, CqlParserK_DOUBLE, CqlParserK_EXISTS, CqlParserK_FILTERING, CqlParserK_FINALFUNC, CqlParserK_FLOAT, CqlParserK_FROZEN, CqlParserK_FUNCTION, CqlParserK_FUNCTIONS, CqlParserK_INET, CqlParserK_INITCOND, CqlParserK_INPUT, CqlParserK_INT, CqlParserK_JSON, CqlParserK_KEY, CqlParserK_KEYS, CqlParserK_KEYSPACES, CqlParserK_LANGUAGE, CqlParserK_LIST, CqlParserK_LOGIN, CqlParserK_MAP, CqlParserK_NOLOGIN, CqlParserK_NOSUPERUSER, CqlParserK_OPTIONS, CqlParserK_PASSWORD, CqlParserK_PERMISSION, CqlParserK_PERMISSIONS, CqlParserK_RETURNS, CqlParserK_ROLE, CqlParserK_ROLES, CqlParserK_SFUNC, CqlParserK_SMALLINT, CqlParserK_STATIC, CqlParserK_STORAGE, CqlParserK_STYPE, CqlParserK_SUPERUSER, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_TRIGGER, CqlParserK_TTL, CqlParserK_TUPLE, CqlParserK_TYPE, CqlParserK_USER, CqlParserK_USERS, CqlParserK_UUID, CqlParserK_VALUES, CqlParserK_VARCHAR, CqlParserK_VARINT, CqlParserK_WRITETIME, CqlParserIDENTIFIER:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(87)
+			p.SetState(95)
 			p.ColumnName()
 		}
 
 	case CqlParserL_PAREN:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(88)
+			p.SetState(96)
 			p.Match(CqlParserL_PAREN)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1567,10 +1720,10 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 			}
 		}
 		{
-			p.SetState(89)
+			p.SetState(97)
 			p.ColumnName()
 		}
-		p.SetState(94)
+		p.SetState(102)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1579,7 +1732,7 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 
 		for _la == CqlParserCOMMA {
 			{
-				p.SetState(90)
+				p.SetState(98)
 				p.Match(CqlParserCOMMA)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -1587,11 +1740,11 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 				}
 			}
 			{
-				p.SetState(91)
+				p.SetState(99)
 				p.ColumnName()
 			}
 
-			p.SetState(96)
+			p.SetState(104)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
@@ -1599,7 +1752,7 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
-			p.SetState(97)
+			p.SetState(105)
 			p.Match(CqlParserR_PAREN)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1750,10 +1903,10 @@ func (p *CqlParser) ClusteringColumns() (localctx IClusteringColumnsContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(101)
+		p.SetState(109)
 		p.ColumnName()
 	}
-	p.SetState(106)
+	p.SetState(114)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1762,7 +1915,7 @@ func (p *CqlParser) ClusteringColumns() (localctx IClusteringColumnsContext) {
 
 	for _la == CqlParserCOMMA {
 		{
-			p.SetState(102)
+			p.SetState(110)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1770,11 +1923,11 @@ func (p *CqlParser) ClusteringColumns() (localctx IClusteringColumnsContext) {
 			}
 		}
 		{
-			p.SetState(103)
+			p.SetState(111)
 			p.ColumnName()
 		}
 
-		p.SetState(108)
+		p.SetState(116)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1803,7 +1956,7 @@ type IColumnNameContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	IDENTIFIER() antlr.TerminalNode
+	Identifier() IIdentifierContext
 
 	// IsColumnNameContext differentiates from other interfaces.
 	IsColumnNameContext()
@@ -1841,8 +1994,20 @@ func NewColumnNameContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 
 func (s *ColumnNameContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *ColumnNameContext) IDENTIFIER() antlr.TerminalNode {
-	return s.GetToken(CqlParserIDENTIFIER, 0)
+func (s *ColumnNameContext) Identifier() IIdentifierContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIdentifierContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIdentifierContext)
 }
 
 func (s *ColumnNameContext) GetRuleContext() antlr.RuleContext {
@@ -1870,12 +2035,8 @@ func (p *CqlParser) ColumnName() (localctx IColumnNameContext) {
 	p.EnterRule(localctx, 18, CqlParserRULE_columnName)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(109)
-		p.Match(CqlParserIDENTIFIER)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
+		p.SetState(117)
+		p.Identifier()
 	}
 
 errorExit:
@@ -1899,7 +2060,7 @@ type ITableNameContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	IDENTIFIER() antlr.TerminalNode
+	Identifier() IIdentifierContext
 	KeyspaceName() IKeyspaceNameContext
 	DOT() antlr.TerminalNode
 
@@ -1939,8 +2100,20 @@ func NewTableNameContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 
 func (s *TableNameContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *TableNameContext) IDENTIFIER() antlr.TerminalNode {
-	return s.GetToken(CqlParserIDENTIFIER, 0)
+func (s *TableNameContext) Identifier() IIdentifierContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIdentifierContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIdentifierContext)
 }
 
 func (s *TableNameContext) KeyspaceName() IKeyspaceNameContext {
@@ -1987,16 +2160,16 @@ func (p *CqlParser) TableName() (localctx ITableNameContext) {
 	localctx = NewTableNameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 20, CqlParserRULE_tableName)
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(114)
+	p.SetState(122)
 	p.GetErrorHandler().Sync(p)
 
 	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 10, p.GetParserRuleContext()) == 1 {
 		{
-			p.SetState(111)
+			p.SetState(119)
 			p.KeyspaceName()
 		}
 		{
-			p.SetState(112)
+			p.SetState(120)
 			p.Match(CqlParserDOT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2008,12 +2181,8 @@ func (p *CqlParser) TableName() (localctx ITableNameContext) {
 		goto errorExit
 	}
 	{
-		p.SetState(116)
-		p.Match(CqlParserIDENTIFIER)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
+		p.SetState(124)
+		p.Identifier()
 	}
 
 errorExit:
@@ -2116,7 +2285,7 @@ func (p *CqlParser) KeyspaceName() (localctx IKeyspaceNameContext) {
 	p.EnterRule(localctx, 22, CqlParserRULE_keyspaceName)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(118)
+		p.SetState(126)
 		p.GeneralIdentifier()
 	}
 
@@ -2142,7 +2311,7 @@ type IGeneralIdentifierContext interface {
 
 	// Getter signatures
 	IDENTIFIER_WITH_HYPHEN() antlr.TerminalNode
-	IDENTIFIER() antlr.TerminalNode
+	Identifier() IIdentifierContext
 
 	// IsGeneralIdentifierContext differentiates from other interfaces.
 	IsGeneralIdentifierContext()
@@ -2184,8 +2353,20 @@ func (s *GeneralIdentifierContext) IDENTIFIER_WITH_HYPHEN() antlr.TerminalNode {
 	return s.GetToken(CqlParserIDENTIFIER_WITH_HYPHEN, 0)
 }
 
-func (s *GeneralIdentifierContext) IDENTIFIER() antlr.TerminalNode {
-	return s.GetToken(CqlParserIDENTIFIER, 0)
+func (s *GeneralIdentifierContext) Identifier() IIdentifierContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIdentifierContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIdentifierContext)
 }
 
 func (s *GeneralIdentifierContext) GetRuleContext() antlr.RuleContext {
@@ -2211,19 +2392,167 @@ func (s *GeneralIdentifierContext) ExitRule(listener antlr.ParseTreeListener) {
 func (p *CqlParser) GeneralIdentifier() (localctx IGeneralIdentifierContext) {
 	localctx = NewGeneralIdentifierContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 24, CqlParserRULE_generalIdentifier)
-	var _la int
+	p.SetState(130)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(120)
-		_la = p.GetTokenStream().LA(1)
-
-		if !(_la == CqlParserIDENTIFIER || _la == CqlParserIDENTIFIER_WITH_HYPHEN) {
-			p.GetErrorHandler().RecoverInline(p)
-		} else {
-			p.GetErrorHandler().ReportMatch(p)
-			p.Consume()
+	switch p.GetTokenStream().LA(1) {
+	case CqlParserIDENTIFIER_WITH_HYPHEN:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(128)
+			p.Match(CqlParserIDENTIFIER_WITH_HYPHEN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
+
+	case CqlParserK_AGGREGATE, CqlParserK_ALL, CqlParserK_AS, CqlParserK_ASCII, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_CALLED, CqlParserK_CLUSTERING, CqlParserK_COMPACT, CqlParserK_CONTAINS, CqlParserK_COUNT, CqlParserK_COUNTER, CqlParserK_CUSTOM, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DISTINCT, CqlParserK_DOUBLE, CqlParserK_EXISTS, CqlParserK_FILTERING, CqlParserK_FINALFUNC, CqlParserK_FLOAT, CqlParserK_FROZEN, CqlParserK_FUNCTION, CqlParserK_FUNCTIONS, CqlParserK_INET, CqlParserK_INITCOND, CqlParserK_INPUT, CqlParserK_INT, CqlParserK_JSON, CqlParserK_KEY, CqlParserK_KEYS, CqlParserK_KEYSPACES, CqlParserK_LANGUAGE, CqlParserK_LIST, CqlParserK_LOGIN, CqlParserK_MAP, CqlParserK_NOLOGIN, CqlParserK_NOSUPERUSER, CqlParserK_OPTIONS, CqlParserK_PASSWORD, CqlParserK_PERMISSION, CqlParserK_PERMISSIONS, CqlParserK_RETURNS, CqlParserK_ROLE, CqlParserK_ROLES, CqlParserK_SFUNC, CqlParserK_SMALLINT, CqlParserK_STATIC, CqlParserK_STORAGE, CqlParserK_STYPE, CqlParserK_SUPERUSER, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_TRIGGER, CqlParserK_TTL, CqlParserK_TUPLE, CqlParserK_TYPE, CqlParserK_USER, CqlParserK_USERS, CqlParserK_UUID, CqlParserK_VALUES, CqlParserK_VARCHAR, CqlParserK_VARINT, CqlParserK_WRITETIME, CqlParserIDENTIFIER:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(129)
+			p.Identifier()
+		}
+
+	default:
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IIdentifierContext is an interface to support dynamic dispatch.
+type IIdentifierContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	NonReservedKeyword() INonReservedKeywordContext
+	IDENTIFIER() antlr.TerminalNode
+
+	// IsIdentifierContext differentiates from other interfaces.
+	IsIdentifierContext()
+}
+
+type IdentifierContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyIdentifierContext() *IdentifierContext {
+	var p = new(IdentifierContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_identifier
+	return p
+}
+
+func InitEmptyIdentifierContext(p *IdentifierContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_identifier
+}
+
+func (*IdentifierContext) IsIdentifierContext() {}
+
+func NewIdentifierContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IdentifierContext {
+	var p = new(IdentifierContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = CqlParserRULE_identifier
+
+	return p
+}
+
+func (s *IdentifierContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *IdentifierContext) NonReservedKeyword() INonReservedKeywordContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(INonReservedKeywordContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(INonReservedKeywordContext)
+}
+
+func (s *IdentifierContext) IDENTIFIER() antlr.TerminalNode {
+	return s.GetToken(CqlParserIDENTIFIER, 0)
+}
+
+func (s *IdentifierContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IdentifierContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *IdentifierContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.EnterIdentifier(s)
+	}
+}
+
+func (s *IdentifierContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.ExitIdentifier(s)
+	}
+}
+
+func (p *CqlParser) Identifier() (localctx IIdentifierContext) {
+	localctx = NewIdentifierContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 26, CqlParserRULE_identifier)
+	p.SetState(134)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetTokenStream().LA(1) {
+	case CqlParserK_AGGREGATE, CqlParserK_ALL, CqlParserK_AS, CqlParserK_ASCII, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_CALLED, CqlParserK_CLUSTERING, CqlParserK_COMPACT, CqlParserK_CONTAINS, CqlParserK_COUNT, CqlParserK_COUNTER, CqlParserK_CUSTOM, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DISTINCT, CqlParserK_DOUBLE, CqlParserK_EXISTS, CqlParserK_FILTERING, CqlParserK_FINALFUNC, CqlParserK_FLOAT, CqlParserK_FROZEN, CqlParserK_FUNCTION, CqlParserK_FUNCTIONS, CqlParserK_INET, CqlParserK_INITCOND, CqlParserK_INPUT, CqlParserK_INT, CqlParserK_JSON, CqlParserK_KEY, CqlParserK_KEYS, CqlParserK_KEYSPACES, CqlParserK_LANGUAGE, CqlParserK_LIST, CqlParserK_LOGIN, CqlParserK_MAP, CqlParserK_NOLOGIN, CqlParserK_NOSUPERUSER, CqlParserK_OPTIONS, CqlParserK_PASSWORD, CqlParserK_PERMISSION, CqlParserK_PERMISSIONS, CqlParserK_RETURNS, CqlParserK_ROLE, CqlParserK_ROLES, CqlParserK_SFUNC, CqlParserK_SMALLINT, CqlParserK_STATIC, CqlParserK_STORAGE, CqlParserK_STYPE, CqlParserK_SUPERUSER, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_TRIGGER, CqlParserK_TTL, CqlParserK_TUPLE, CqlParserK_TYPE, CqlParserK_USER, CqlParserK_USERS, CqlParserK_UUID, CqlParserK_VALUES, CqlParserK_VARCHAR, CqlParserK_VARINT, CqlParserK_WRITETIME:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(132)
+			p.NonReservedKeyword()
+		}
+
+	case CqlParserIDENTIFIER:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(133)
+			p.Match(CqlParserIDENTIFIER)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	default:
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
 errorExit:
@@ -2340,8 +2669,8 @@ func (s *CqlTypeContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) CqlType() (localctx ICqlTypeContext) {
 	localctx = NewCqlTypeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, CqlParserRULE_cqlType)
-	p.SetState(124)
+	p.EnterRule(localctx, 28, CqlParserRULE_cqlType)
+	p.SetState(138)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2351,14 +2680,14 @@ func (p *CqlParser) CqlType() (localctx ICqlTypeContext) {
 	case CqlParserK_ASCII, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_COUNTER, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DOUBLE, CqlParserK_FLOAT, CqlParserK_INET, CqlParserK_INT, CqlParserK_SMALLINT, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_UUID, CqlParserK_VARCHAR, CqlParserK_VARINT:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(122)
+			p.SetState(136)
 			p.CqlNativeType()
 		}
 
-	case CqlParserK_MAP, CqlParserK_SET, CqlParserK_LIST:
+	case CqlParserK_LIST, CqlParserK_MAP, CqlParserK_SET:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(123)
+			p.SetState(137)
 			p.CqlCollectionType()
 		}
 
@@ -2457,10 +2786,10 @@ func (s *PrimaryKeyKeywordsContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) PrimaryKeyKeywords() (localctx IPrimaryKeyKeywordsContext) {
 	localctx = NewPrimaryKeyKeywordsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 28, CqlParserRULE_primaryKeyKeywords)
+	p.EnterRule(localctx, 30, CqlParserRULE_primaryKeyKeywords)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(126)
+		p.SetState(140)
 		p.Match(CqlParserK_PRIMARY)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2468,7 +2797,7 @@ func (p *CqlParser) PrimaryKeyKeywords() (localctx IPrimaryKeyKeywordsContext) {
 		}
 	}
 	{
-		p.SetState(127)
+		p.SetState(141)
 		p.Match(CqlParserK_KEY)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2571,10 +2900,10 @@ func (s *IfNotExistContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) IfNotExist() (localctx IIfNotExistContext) {
 	localctx = NewIfNotExistContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 30, CqlParserRULE_ifNotExist)
+	p.EnterRule(localctx, 32, CqlParserRULE_ifNotExist)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(129)
+		p.SetState(143)
 		p.Match(CqlParserK_IF)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2582,7 +2911,7 @@ func (p *CqlParser) IfNotExist() (localctx IIfNotExistContext) {
 		}
 	}
 	{
-		p.SetState(130)
+		p.SetState(144)
 		p.Match(CqlParserK_NOT)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2590,7 +2919,7 @@ func (p *CqlParser) IfNotExist() (localctx IIfNotExistContext) {
 		}
 	}
 	{
-		p.SetState(131)
+		p.SetState(145)
 		p.Match(CqlParserK_EXISTS)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2778,15 +3107,15 @@ func (s *CqlNativeTypeContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) CqlNativeType() (localctx ICqlNativeTypeContext) {
 	localctx = NewCqlNativeTypeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 32, CqlParserRULE_cqlNativeType)
+	p.EnterRule(localctx, 34, CqlParserRULE_cqlNativeType)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(133)
+		p.SetState(147)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&536870400) != 0) {
+		if !(((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&37155805446915072) != 0) || ((int64((_la-93)) & ^0x3f) == 0 && ((int64(1)<<(_la-93))&218105793) != 0)) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -2947,10 +3276,10 @@ func (s *CqlCollectionTypeContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 	localctx = NewCqlCollectionTypeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 34, CqlParserRULE_cqlCollectionType)
+	p.EnterRule(localctx, 36, CqlParserRULE_cqlCollectionType)
 	var _la int
 
-	p.SetState(147)
+	p.SetState(161)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2960,7 +3289,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 	case CqlParserK_MAP:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(135)
+			p.SetState(149)
 			p.Match(CqlParserK_MAP)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2968,7 +3297,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(136)
+			p.SetState(150)
 			p.Match(CqlParserL_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2976,11 +3305,11 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(137)
+			p.SetState(151)
 			p.CqlNativeType()
 		}
 		{
-			p.SetState(138)
+			p.SetState(152)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2988,11 +3317,11 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(139)
+			p.SetState(153)
 			p.CqlNativeType()
 		}
 		{
-			p.SetState(140)
+			p.SetState(154)
 			p.Match(CqlParserR_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3000,13 +3329,13 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 
-	case CqlParserK_SET, CqlParserK_LIST:
+	case CqlParserK_LIST, CqlParserK_SET:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(142)
+			p.SetState(156)
 			_la = p.GetTokenStream().LA(1)
 
-			if !(_la == CqlParserK_SET || _la == CqlParserK_LIST) {
+			if !(_la == CqlParserK_LIST || _la == CqlParserK_SET) {
 				p.GetErrorHandler().RecoverInline(p)
 			} else {
 				p.GetErrorHandler().ReportMatch(p)
@@ -3014,7 +3343,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(143)
+			p.SetState(157)
 			p.Match(CqlParserL_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3022,11 +3351,11 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(144)
+			p.SetState(158)
 			p.CqlNativeType()
 		}
 		{
-			p.SetState(145)
+			p.SetState(159)
 			p.Match(CqlParserR_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3167,32 +3496,32 @@ func (s *WihtTableOptionsContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) WihtTableOptions() (localctx IWihtTableOptionsContext) {
 	localctx = NewWihtTableOptionsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 36, CqlParserRULE_wihtTableOptions)
+	p.EnterRule(localctx, 38, CqlParserRULE_wihtTableOptions)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(149)
+		p.SetState(163)
 		p.Match(CqlParserK_WITH)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(153)
+	p.SetState(167)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&39578123632638) != 0 {
+	for ((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-2) != 0) || ((int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&-1152921504606846977) != 0) || ((int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&575) != 0) {
 		{
-			p.SetState(150)
+			p.SetState(164)
 			p.NonSemicolonToken()
 		}
 
-		p.SetState(155)
+		p.SetState(169)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -3221,37 +3550,7 @@ type INonSemicolonTokenContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	K_CREATE() antlr.TerminalNode
-	K_TABLE() antlr.TerminalNode
-	K_IF() antlr.TerminalNode
-	K_NOT() antlr.TerminalNode
-	K_EXISTS() antlr.TerminalNode
-	K_PRIMARY() antlr.TerminalNode
-	K_KEY() antlr.TerminalNode
-	K_WITH() antlr.TerminalNode
-	K_ASCII() antlr.TerminalNode
-	K_BIGINT() antlr.TerminalNode
-	K_BLOB() antlr.TerminalNode
-	K_BOOLEAN() antlr.TerminalNode
-	K_COUNTER() antlr.TerminalNode
-	K_DATE() antlr.TerminalNode
-	K_DECIMAL() antlr.TerminalNode
-	K_DOUBLE() antlr.TerminalNode
-	K_FLOAT() antlr.TerminalNode
-	K_INET() antlr.TerminalNode
-	K_INT() antlr.TerminalNode
-	K_SMALLINT() antlr.TerminalNode
-	K_TEXT() antlr.TerminalNode
-	K_TIME() antlr.TerminalNode
-	K_TIMESTAMP() antlr.TerminalNode
-	K_TIMEUUID() antlr.TerminalNode
-	K_TINYINT() antlr.TerminalNode
-	K_UUID() antlr.TerminalNode
-	K_VARCHAR() antlr.TerminalNode
-	K_VARINT() antlr.TerminalNode
-	K_MAP() antlr.TerminalNode
-	K_SET() antlr.TerminalNode
-	K_LIST() antlr.TerminalNode
+	Keyword() IKeywordContext
 	DQUOTE() antlr.TerminalNode
 	DOT() antlr.TerminalNode
 	COMMA() antlr.TerminalNode
@@ -3299,128 +3598,20 @@ func NewNonSemicolonTokenContext(parser antlr.Parser, parent antlr.ParserRuleCon
 
 func (s *NonSemicolonTokenContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *NonSemicolonTokenContext) K_CREATE() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_CREATE, 0)
-}
+func (s *NonSemicolonTokenContext) Keyword() IKeywordContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IKeywordContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
 
-func (s *NonSemicolonTokenContext) K_TABLE() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_TABLE, 0)
-}
+	if t == nil {
+		return nil
+	}
 
-func (s *NonSemicolonTokenContext) K_IF() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_IF, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_NOT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_NOT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_EXISTS() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_EXISTS, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_PRIMARY() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_PRIMARY, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_KEY() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_KEY, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_WITH() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_WITH, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_ASCII() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_ASCII, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_BIGINT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_BIGINT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_BLOB() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_BLOB, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_BOOLEAN() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_BOOLEAN, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_COUNTER() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_COUNTER, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_DATE() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_DATE, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_DECIMAL() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_DECIMAL, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_DOUBLE() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_DOUBLE, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_FLOAT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_FLOAT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_INET() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_INET, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_INT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_INT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_SMALLINT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_SMALLINT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_TEXT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_TEXT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_TIME() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_TIME, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_TIMESTAMP() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_TIMESTAMP, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_TIMEUUID() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_TIMEUUID, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_TINYINT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_TINYINT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_UUID() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_UUID, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_VARCHAR() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_VARCHAR, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_VARINT() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_VARINT, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_MAP() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_MAP, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_SET() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_SET, 0)
-}
-
-func (s *NonSemicolonTokenContext) K_LIST() antlr.TerminalNode {
-	return s.GetToken(CqlParserK_LIST, 0)
+	return t.(IKeywordContext)
 }
 
 func (s *NonSemicolonTokenContext) DQUOTE() antlr.TerminalNode {
@@ -3485,15 +3676,1077 @@ func (s *NonSemicolonTokenContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) NonSemicolonToken() (localctx INonSemicolonTokenContext) {
 	localctx = NewNonSemicolonTokenContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 38, CqlParserRULE_nonSemicolonToken)
+	p.EnterRule(localctx, 40, CqlParserRULE_nonSemicolonToken)
+	p.SetState(181)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetTokenStream().LA(1) {
+	case CqlParserK_ADD, CqlParserK_AGGREGATE, CqlParserK_ALL, CqlParserK_ALLOW, CqlParserK_ALTER, CqlParserK_AND, CqlParserK_APPLY, CqlParserK_AS, CqlParserK_ASC, CqlParserK_ASCII, CqlParserK_AUTHORIZE, CqlParserK_BATCH, CqlParserK_BEGIN, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_BY, CqlParserK_CALLED, CqlParserK_CLUSTERING, CqlParserK_COLUMNFAMILY, CqlParserK_COMPACT, CqlParserK_CONTAINS, CqlParserK_COUNT, CqlParserK_COUNTER, CqlParserK_CREATE, CqlParserK_CUSTOM, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DELETE, CqlParserK_DESC, CqlParserK_DESCRIBE, CqlParserK_DISTINCT, CqlParserK_DOUBLE, CqlParserK_DROP, CqlParserK_ENTRIES, CqlParserK_EXECUTE, CqlParserK_EXISTS, CqlParserK_FILTERING, CqlParserK_FINALFUNC, CqlParserK_FLOAT, CqlParserK_FROM, CqlParserK_FROZEN, CqlParserK_FULL, CqlParserK_FUNCTION, CqlParserK_FUNCTIONS, CqlParserK_GRANT, CqlParserK_IF, CqlParserK_IN, CqlParserK_INDEX, CqlParserK_INET, CqlParserK_INFINITY, CqlParserK_INITCOND, CqlParserK_INPUT, CqlParserK_INSERT, CqlParserK_INT, CqlParserK_INTO, CqlParserK_JSON, CqlParserK_KEY, CqlParserK_KEYS, CqlParserK_KEYSPACE, CqlParserK_KEYSPACES, CqlParserK_LANGUAGE, CqlParserK_LIMIT, CqlParserK_LIST, CqlParserK_LOGIN, CqlParserK_MAP, CqlParserK_MODIFY, CqlParserK_NAN, CqlParserK_NOLOGIN, CqlParserK_NORECURSIVE, CqlParserK_NOSUPERUSER, CqlParserK_NOT, CqlParserK_NULL, CqlParserK_OF, CqlParserK_ON, CqlParserK_OPTIONS, CqlParserK_OR, CqlParserK_ORDER, CqlParserK_PASSWORD, CqlParserK_PERMISSION, CqlParserK_PERMISSIONS, CqlParserK_PRIMARY, CqlParserK_RENAME, CqlParserK_REPLACE, CqlParserK_RETURNS, CqlParserK_REVOKE, CqlParserK_ROLE, CqlParserK_ROLES, CqlParserK_SCHEMA, CqlParserK_SELECT, CqlParserK_SET, CqlParserK_SFUNC, CqlParserK_SMALLINT, CqlParserK_STATIC, CqlParserK_STORAGE, CqlParserK_STYPE, CqlParserK_SUPERUSER, CqlParserK_TABLE, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_TO, CqlParserK_TOKEN, CqlParserK_TRIGGER, CqlParserK_TRUNCATE, CqlParserK_TTL, CqlParserK_TUPLE, CqlParserK_TYPE, CqlParserK_UNLOGGED, CqlParserK_UPDATE, CqlParserK_USE, CqlParserK_USER, CqlParserK_USERS, CqlParserK_USING, CqlParserK_UUID, CqlParserK_VALUES, CqlParserK_VARCHAR, CqlParserK_VARINT, CqlParserK_WHERE, CqlParserK_WITH, CqlParserK_WRITETIME:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(170)
+			p.Keyword()
+		}
+
+	case CqlParserDQUOTE:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(171)
+			p.Match(CqlParserDQUOTE)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserDOT:
+		p.EnterOuterAlt(localctx, 3)
+		{
+			p.SetState(172)
+			p.Match(CqlParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserCOMMA:
+		p.EnterOuterAlt(localctx, 4)
+		{
+			p.SetState(173)
+			p.Match(CqlParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserL_PAREN:
+		p.EnterOuterAlt(localctx, 5)
+		{
+			p.SetState(174)
+			p.Match(CqlParserL_PAREN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserR_PAREN:
+		p.EnterOuterAlt(localctx, 6)
+		{
+			p.SetState(175)
+			p.Match(CqlParserR_PAREN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserL_ANGLE_BRACKET:
+		p.EnterOuterAlt(localctx, 7)
+		{
+			p.SetState(176)
+			p.Match(CqlParserL_ANGLE_BRACKET)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserR_ANGLE_BRACKET:
+		p.EnterOuterAlt(localctx, 8)
+		{
+			p.SetState(177)
+			p.Match(CqlParserR_ANGLE_BRACKET)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserIDENTIFIER:
+		p.EnterOuterAlt(localctx, 9)
+		{
+			p.SetState(178)
+			p.Match(CqlParserIDENTIFIER)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserIDENTIFIER_WITH_HYPHEN:
+		p.EnterOuterAlt(localctx, 10)
+		{
+			p.SetState(179)
+			p.Match(CqlParserIDENTIFIER_WITH_HYPHEN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	case CqlParserUNKNOWN:
+		p.EnterOuterAlt(localctx, 11)
+		{
+			p.SetState(180)
+			p.Match(CqlParserUNKNOWN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+
+	default:
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IKeywordContext is an interface to support dynamic dispatch.
+type IKeywordContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	ReservedKeyword() IReservedKeywordContext
+	NonReservedKeyword() INonReservedKeywordContext
+
+	// IsKeywordContext differentiates from other interfaces.
+	IsKeywordContext()
+}
+
+type KeywordContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyKeywordContext() *KeywordContext {
+	var p = new(KeywordContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_keyword
+	return p
+}
+
+func InitEmptyKeywordContext(p *KeywordContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_keyword
+}
+
+func (*KeywordContext) IsKeywordContext() {}
+
+func NewKeywordContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *KeywordContext {
+	var p = new(KeywordContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = CqlParserRULE_keyword
+
+	return p
+}
+
+func (s *KeywordContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *KeywordContext) ReservedKeyword() IReservedKeywordContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IReservedKeywordContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IReservedKeywordContext)
+}
+
+func (s *KeywordContext) NonReservedKeyword() INonReservedKeywordContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(INonReservedKeywordContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(INonReservedKeywordContext)
+}
+
+func (s *KeywordContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *KeywordContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *KeywordContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.EnterKeyword(s)
+	}
+}
+
+func (s *KeywordContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.ExitKeyword(s)
+	}
+}
+
+func (p *CqlParser) Keyword() (localctx IKeywordContext) {
+	localctx = NewKeywordContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 42, CqlParserRULE_keyword)
+	p.SetState(185)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetTokenStream().LA(1) {
+	case CqlParserK_ADD, CqlParserK_ALLOW, CqlParserK_ALTER, CqlParserK_AND, CqlParserK_APPLY, CqlParserK_ASC, CqlParserK_AUTHORIZE, CqlParserK_BATCH, CqlParserK_BEGIN, CqlParserK_BY, CqlParserK_COLUMNFAMILY, CqlParserK_CREATE, CqlParserK_DELETE, CqlParserK_DESC, CqlParserK_DESCRIBE, CqlParserK_DROP, CqlParserK_ENTRIES, CqlParserK_EXECUTE, CqlParserK_FROM, CqlParserK_FULL, CqlParserK_GRANT, CqlParserK_IF, CqlParserK_IN, CqlParserK_INDEX, CqlParserK_INFINITY, CqlParserK_INSERT, CqlParserK_INTO, CqlParserK_KEYSPACE, CqlParserK_LIMIT, CqlParserK_MODIFY, CqlParserK_NAN, CqlParserK_NORECURSIVE, CqlParserK_NOT, CqlParserK_NULL, CqlParserK_OF, CqlParserK_ON, CqlParserK_OR, CqlParserK_ORDER, CqlParserK_PRIMARY, CqlParserK_RENAME, CqlParserK_REPLACE, CqlParserK_REVOKE, CqlParserK_SCHEMA, CqlParserK_SELECT, CqlParserK_SET, CqlParserK_TABLE, CqlParserK_TO, CqlParserK_TOKEN, CqlParserK_TRUNCATE, CqlParserK_UNLOGGED, CqlParserK_UPDATE, CqlParserK_USE, CqlParserK_USING, CqlParserK_WHERE, CqlParserK_WITH:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(183)
+			p.ReservedKeyword()
+		}
+
+	case CqlParserK_AGGREGATE, CqlParserK_ALL, CqlParserK_AS, CqlParserK_ASCII, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_CALLED, CqlParserK_CLUSTERING, CqlParserK_COMPACT, CqlParserK_CONTAINS, CqlParserK_COUNT, CqlParserK_COUNTER, CqlParserK_CUSTOM, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DISTINCT, CqlParserK_DOUBLE, CqlParserK_EXISTS, CqlParserK_FILTERING, CqlParserK_FINALFUNC, CqlParserK_FLOAT, CqlParserK_FROZEN, CqlParserK_FUNCTION, CqlParserK_FUNCTIONS, CqlParserK_INET, CqlParserK_INITCOND, CqlParserK_INPUT, CqlParserK_INT, CqlParserK_JSON, CqlParserK_KEY, CqlParserK_KEYS, CqlParserK_KEYSPACES, CqlParserK_LANGUAGE, CqlParserK_LIST, CqlParserK_LOGIN, CqlParserK_MAP, CqlParserK_NOLOGIN, CqlParserK_NOSUPERUSER, CqlParserK_OPTIONS, CqlParserK_PASSWORD, CqlParserK_PERMISSION, CqlParserK_PERMISSIONS, CqlParserK_RETURNS, CqlParserK_ROLE, CqlParserK_ROLES, CqlParserK_SFUNC, CqlParserK_SMALLINT, CqlParserK_STATIC, CqlParserK_STORAGE, CqlParserK_STYPE, CqlParserK_SUPERUSER, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_TRIGGER, CqlParserK_TTL, CqlParserK_TUPLE, CqlParserK_TYPE, CqlParserK_USER, CqlParserK_USERS, CqlParserK_UUID, CqlParserK_VALUES, CqlParserK_VARCHAR, CqlParserK_VARINT, CqlParserK_WRITETIME:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(184)
+			p.NonReservedKeyword()
+		}
+
+	default:
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IReservedKeywordContext is an interface to support dynamic dispatch.
+type IReservedKeywordContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	K_ADD() antlr.TerminalNode
+	K_ALLOW() antlr.TerminalNode
+	K_ALTER() antlr.TerminalNode
+	K_AND() antlr.TerminalNode
+	K_APPLY() antlr.TerminalNode
+	K_ASC() antlr.TerminalNode
+	K_AUTHORIZE() antlr.TerminalNode
+	K_BATCH() antlr.TerminalNode
+	K_BEGIN() antlr.TerminalNode
+	K_BY() antlr.TerminalNode
+	K_COLUMNFAMILY() antlr.TerminalNode
+	K_CREATE() antlr.TerminalNode
+	K_DELETE() antlr.TerminalNode
+	K_DESC() antlr.TerminalNode
+	K_DESCRIBE() antlr.TerminalNode
+	K_DROP() antlr.TerminalNode
+	K_ENTRIES() antlr.TerminalNode
+	K_EXECUTE() antlr.TerminalNode
+	K_FROM() antlr.TerminalNode
+	K_FULL() antlr.TerminalNode
+	K_GRANT() antlr.TerminalNode
+	K_IF() antlr.TerminalNode
+	K_IN() antlr.TerminalNode
+	K_INDEX() antlr.TerminalNode
+	K_INFINITY() antlr.TerminalNode
+	K_INSERT() antlr.TerminalNode
+	K_INTO() antlr.TerminalNode
+	K_KEYSPACE() antlr.TerminalNode
+	K_LIMIT() antlr.TerminalNode
+	K_MODIFY() antlr.TerminalNode
+	K_NAN() antlr.TerminalNode
+	K_NORECURSIVE() antlr.TerminalNode
+	K_NOT() antlr.TerminalNode
+	K_NULL() antlr.TerminalNode
+	K_OF() antlr.TerminalNode
+	K_ON() antlr.TerminalNode
+	K_OR() antlr.TerminalNode
+	K_ORDER() antlr.TerminalNode
+	K_PRIMARY() antlr.TerminalNode
+	K_RENAME() antlr.TerminalNode
+	K_REPLACE() antlr.TerminalNode
+	K_REVOKE() antlr.TerminalNode
+	K_SCHEMA() antlr.TerminalNode
+	K_SELECT() antlr.TerminalNode
+	K_SET() antlr.TerminalNode
+	K_TABLE() antlr.TerminalNode
+	K_TO() antlr.TerminalNode
+	K_TOKEN() antlr.TerminalNode
+	K_TRUNCATE() antlr.TerminalNode
+	K_UNLOGGED() antlr.TerminalNode
+	K_UPDATE() antlr.TerminalNode
+	K_USE() antlr.TerminalNode
+	K_USING() antlr.TerminalNode
+	K_WHERE() antlr.TerminalNode
+	K_WITH() antlr.TerminalNode
+
+	// IsReservedKeywordContext differentiates from other interfaces.
+	IsReservedKeywordContext()
+}
+
+type ReservedKeywordContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyReservedKeywordContext() *ReservedKeywordContext {
+	var p = new(ReservedKeywordContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_reservedKeyword
+	return p
+}
+
+func InitEmptyReservedKeywordContext(p *ReservedKeywordContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_reservedKeyword
+}
+
+func (*ReservedKeywordContext) IsReservedKeywordContext() {}
+
+func NewReservedKeywordContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ReservedKeywordContext {
+	var p = new(ReservedKeywordContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = CqlParserRULE_reservedKeyword
+
+	return p
+}
+
+func (s *ReservedKeywordContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *ReservedKeywordContext) K_ADD() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ADD, 0)
+}
+
+func (s *ReservedKeywordContext) K_ALLOW() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ALLOW, 0)
+}
+
+func (s *ReservedKeywordContext) K_ALTER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ALTER, 0)
+}
+
+func (s *ReservedKeywordContext) K_AND() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_AND, 0)
+}
+
+func (s *ReservedKeywordContext) K_APPLY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_APPLY, 0)
+}
+
+func (s *ReservedKeywordContext) K_ASC() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ASC, 0)
+}
+
+func (s *ReservedKeywordContext) K_AUTHORIZE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_AUTHORIZE, 0)
+}
+
+func (s *ReservedKeywordContext) K_BATCH() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_BATCH, 0)
+}
+
+func (s *ReservedKeywordContext) K_BEGIN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_BEGIN, 0)
+}
+
+func (s *ReservedKeywordContext) K_BY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_BY, 0)
+}
+
+func (s *ReservedKeywordContext) K_COLUMNFAMILY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_COLUMNFAMILY, 0)
+}
+
+func (s *ReservedKeywordContext) K_CREATE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_CREATE, 0)
+}
+
+func (s *ReservedKeywordContext) K_DELETE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DELETE, 0)
+}
+
+func (s *ReservedKeywordContext) K_DESC() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DESC, 0)
+}
+
+func (s *ReservedKeywordContext) K_DESCRIBE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DESCRIBE, 0)
+}
+
+func (s *ReservedKeywordContext) K_DROP() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DROP, 0)
+}
+
+func (s *ReservedKeywordContext) K_ENTRIES() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ENTRIES, 0)
+}
+
+func (s *ReservedKeywordContext) K_EXECUTE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_EXECUTE, 0)
+}
+
+func (s *ReservedKeywordContext) K_FROM() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FROM, 0)
+}
+
+func (s *ReservedKeywordContext) K_FULL() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FULL, 0)
+}
+
+func (s *ReservedKeywordContext) K_GRANT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_GRANT, 0)
+}
+
+func (s *ReservedKeywordContext) K_IF() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_IF, 0)
+}
+
+func (s *ReservedKeywordContext) K_IN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_IN, 0)
+}
+
+func (s *ReservedKeywordContext) K_INDEX() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INDEX, 0)
+}
+
+func (s *ReservedKeywordContext) K_INFINITY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INFINITY, 0)
+}
+
+func (s *ReservedKeywordContext) K_INSERT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INSERT, 0)
+}
+
+func (s *ReservedKeywordContext) K_INTO() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INTO, 0)
+}
+
+func (s *ReservedKeywordContext) K_KEYSPACE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_KEYSPACE, 0)
+}
+
+func (s *ReservedKeywordContext) K_LIMIT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_LIMIT, 0)
+}
+
+func (s *ReservedKeywordContext) K_MODIFY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_MODIFY, 0)
+}
+
+func (s *ReservedKeywordContext) K_NAN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_NAN, 0)
+}
+
+func (s *ReservedKeywordContext) K_NORECURSIVE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_NORECURSIVE, 0)
+}
+
+func (s *ReservedKeywordContext) K_NOT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_NOT, 0)
+}
+
+func (s *ReservedKeywordContext) K_NULL() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_NULL, 0)
+}
+
+func (s *ReservedKeywordContext) K_OF() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_OF, 0)
+}
+
+func (s *ReservedKeywordContext) K_ON() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ON, 0)
+}
+
+func (s *ReservedKeywordContext) K_OR() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_OR, 0)
+}
+
+func (s *ReservedKeywordContext) K_ORDER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ORDER, 0)
+}
+
+func (s *ReservedKeywordContext) K_PRIMARY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_PRIMARY, 0)
+}
+
+func (s *ReservedKeywordContext) K_RENAME() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_RENAME, 0)
+}
+
+func (s *ReservedKeywordContext) K_REPLACE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_REPLACE, 0)
+}
+
+func (s *ReservedKeywordContext) K_REVOKE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_REVOKE, 0)
+}
+
+func (s *ReservedKeywordContext) K_SCHEMA() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_SCHEMA, 0)
+}
+
+func (s *ReservedKeywordContext) K_SELECT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_SELECT, 0)
+}
+
+func (s *ReservedKeywordContext) K_SET() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_SET, 0)
+}
+
+func (s *ReservedKeywordContext) K_TABLE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TABLE, 0)
+}
+
+func (s *ReservedKeywordContext) K_TO() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TO, 0)
+}
+
+func (s *ReservedKeywordContext) K_TOKEN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TOKEN, 0)
+}
+
+func (s *ReservedKeywordContext) K_TRUNCATE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TRUNCATE, 0)
+}
+
+func (s *ReservedKeywordContext) K_UNLOGGED() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_UNLOGGED, 0)
+}
+
+func (s *ReservedKeywordContext) K_UPDATE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_UPDATE, 0)
+}
+
+func (s *ReservedKeywordContext) K_USE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_USE, 0)
+}
+
+func (s *ReservedKeywordContext) K_USING() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_USING, 0)
+}
+
+func (s *ReservedKeywordContext) K_WHERE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_WHERE, 0)
+}
+
+func (s *ReservedKeywordContext) K_WITH() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_WITH, 0)
+}
+
+func (s *ReservedKeywordContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *ReservedKeywordContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *ReservedKeywordContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.EnterReservedKeyword(s)
+	}
+}
+
+func (s *ReservedKeywordContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.ExitReservedKeyword(s)
+	}
+}
+
+func (p *CqlParser) ReservedKeyword() (localctx IReservedKeywordContext) {
+	localctx = NewReservedKeywordContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 44, CqlParserRULE_reservedKeyword)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(156)
+		p.SetState(187)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&39578123632638) != 0) {
+		if !(((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-7977060089555961102) != 0) || ((int64((_la-67)) & ^0x3f) == 0 && ((int64(1)<<(_la-67))&54730804790267371) != 0)) {
+			p.GetErrorHandler().RecoverInline(p)
+		} else {
+			p.GetErrorHandler().ReportMatch(p)
+			p.Consume()
+		}
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// INonReservedKeywordContext is an interface to support dynamic dispatch.
+type INonReservedKeywordContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	K_AGGREGATE() antlr.TerminalNode
+	K_ALL() antlr.TerminalNode
+	K_AS() antlr.TerminalNode
+	K_ASCII() antlr.TerminalNode
+	K_BIGINT() antlr.TerminalNode
+	K_BLOB() antlr.TerminalNode
+	K_BOOLEAN() antlr.TerminalNode
+	K_CALLED() antlr.TerminalNode
+	K_CLUSTERING() antlr.TerminalNode
+	K_COMPACT() antlr.TerminalNode
+	K_CONTAINS() antlr.TerminalNode
+	K_COUNT() antlr.TerminalNode
+	K_COUNTER() antlr.TerminalNode
+	K_CUSTOM() antlr.TerminalNode
+	K_DATE() antlr.TerminalNode
+	K_DECIMAL() antlr.TerminalNode
+	K_DISTINCT() antlr.TerminalNode
+	K_DOUBLE() antlr.TerminalNode
+	K_EXISTS() antlr.TerminalNode
+	K_FILTERING() antlr.TerminalNode
+	K_FINALFUNC() antlr.TerminalNode
+	K_FLOAT() antlr.TerminalNode
+	K_FROZEN() antlr.TerminalNode
+	K_FUNCTION() antlr.TerminalNode
+	K_FUNCTIONS() antlr.TerminalNode
+	K_INET() antlr.TerminalNode
+	K_INITCOND() antlr.TerminalNode
+	K_INPUT() antlr.TerminalNode
+	K_INT() antlr.TerminalNode
+	K_JSON() antlr.TerminalNode
+	K_KEY() antlr.TerminalNode
+	K_KEYS() antlr.TerminalNode
+	K_KEYSPACES() antlr.TerminalNode
+	K_LANGUAGE() antlr.TerminalNode
+	K_LIST() antlr.TerminalNode
+	K_LOGIN() antlr.TerminalNode
+	K_MAP() antlr.TerminalNode
+	K_NOLOGIN() antlr.TerminalNode
+	K_NOSUPERUSER() antlr.TerminalNode
+	K_OPTIONS() antlr.TerminalNode
+	K_PASSWORD() antlr.TerminalNode
+	K_PERMISSION() antlr.TerminalNode
+	K_PERMISSIONS() antlr.TerminalNode
+	K_RETURNS() antlr.TerminalNode
+	K_ROLE() antlr.TerminalNode
+	K_ROLES() antlr.TerminalNode
+	K_SFUNC() antlr.TerminalNode
+	K_SMALLINT() antlr.TerminalNode
+	K_STATIC() antlr.TerminalNode
+	K_STORAGE() antlr.TerminalNode
+	K_STYPE() antlr.TerminalNode
+	K_SUPERUSER() antlr.TerminalNode
+	K_TEXT() antlr.TerminalNode
+	K_TIME() antlr.TerminalNode
+	K_TIMESTAMP() antlr.TerminalNode
+	K_TIMEUUID() antlr.TerminalNode
+	K_TINYINT() antlr.TerminalNode
+	K_TRIGGER() antlr.TerminalNode
+	K_TTL() antlr.TerminalNode
+	K_TUPLE() antlr.TerminalNode
+	K_TYPE() antlr.TerminalNode
+	K_USER() antlr.TerminalNode
+	K_USERS() antlr.TerminalNode
+	K_UUID() antlr.TerminalNode
+	K_VALUES() antlr.TerminalNode
+	K_VARCHAR() antlr.TerminalNode
+	K_VARINT() antlr.TerminalNode
+	K_WRITETIME() antlr.TerminalNode
+
+	// IsNonReservedKeywordContext differentiates from other interfaces.
+	IsNonReservedKeywordContext()
+}
+
+type NonReservedKeywordContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyNonReservedKeywordContext() *NonReservedKeywordContext {
+	var p = new(NonReservedKeywordContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_nonReservedKeyword
+	return p
+}
+
+func InitEmptyNonReservedKeywordContext(p *NonReservedKeywordContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_nonReservedKeyword
+}
+
+func (*NonReservedKeywordContext) IsNonReservedKeywordContext() {}
+
+func NewNonReservedKeywordContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *NonReservedKeywordContext {
+	var p = new(NonReservedKeywordContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = CqlParserRULE_nonReservedKeyword
+
+	return p
+}
+
+func (s *NonReservedKeywordContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *NonReservedKeywordContext) K_AGGREGATE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_AGGREGATE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_ALL() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ALL, 0)
+}
+
+func (s *NonReservedKeywordContext) K_AS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_AS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_ASCII() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ASCII, 0)
+}
+
+func (s *NonReservedKeywordContext) K_BIGINT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_BIGINT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_BLOB() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_BLOB, 0)
+}
+
+func (s *NonReservedKeywordContext) K_BOOLEAN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_BOOLEAN, 0)
+}
+
+func (s *NonReservedKeywordContext) K_CALLED() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_CALLED, 0)
+}
+
+func (s *NonReservedKeywordContext) K_CLUSTERING() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_CLUSTERING, 0)
+}
+
+func (s *NonReservedKeywordContext) K_COMPACT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_COMPACT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_CONTAINS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_CONTAINS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_COUNT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_COUNT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_COUNTER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_COUNTER, 0)
+}
+
+func (s *NonReservedKeywordContext) K_CUSTOM() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_CUSTOM, 0)
+}
+
+func (s *NonReservedKeywordContext) K_DATE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DATE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_DECIMAL() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DECIMAL, 0)
+}
+
+func (s *NonReservedKeywordContext) K_DISTINCT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DISTINCT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_DOUBLE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_DOUBLE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_EXISTS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_EXISTS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_FILTERING() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FILTERING, 0)
+}
+
+func (s *NonReservedKeywordContext) K_FINALFUNC() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FINALFUNC, 0)
+}
+
+func (s *NonReservedKeywordContext) K_FLOAT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FLOAT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_FROZEN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FROZEN, 0)
+}
+
+func (s *NonReservedKeywordContext) K_FUNCTION() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FUNCTION, 0)
+}
+
+func (s *NonReservedKeywordContext) K_FUNCTIONS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_FUNCTIONS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_INET() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INET, 0)
+}
+
+func (s *NonReservedKeywordContext) K_INITCOND() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INITCOND, 0)
+}
+
+func (s *NonReservedKeywordContext) K_INPUT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INPUT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_INT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_INT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_JSON() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_JSON, 0)
+}
+
+func (s *NonReservedKeywordContext) K_KEY() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_KEY, 0)
+}
+
+func (s *NonReservedKeywordContext) K_KEYS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_KEYS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_KEYSPACES() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_KEYSPACES, 0)
+}
+
+func (s *NonReservedKeywordContext) K_LANGUAGE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_LANGUAGE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_LIST() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_LIST, 0)
+}
+
+func (s *NonReservedKeywordContext) K_LOGIN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_LOGIN, 0)
+}
+
+func (s *NonReservedKeywordContext) K_MAP() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_MAP, 0)
+}
+
+func (s *NonReservedKeywordContext) K_NOLOGIN() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_NOLOGIN, 0)
+}
+
+func (s *NonReservedKeywordContext) K_NOSUPERUSER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_NOSUPERUSER, 0)
+}
+
+func (s *NonReservedKeywordContext) K_OPTIONS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_OPTIONS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_PASSWORD() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_PASSWORD, 0)
+}
+
+func (s *NonReservedKeywordContext) K_PERMISSION() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_PERMISSION, 0)
+}
+
+func (s *NonReservedKeywordContext) K_PERMISSIONS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_PERMISSIONS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_RETURNS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_RETURNS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_ROLE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ROLE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_ROLES() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_ROLES, 0)
+}
+
+func (s *NonReservedKeywordContext) K_SFUNC() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_SFUNC, 0)
+}
+
+func (s *NonReservedKeywordContext) K_SMALLINT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_SMALLINT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_STATIC() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_STATIC, 0)
+}
+
+func (s *NonReservedKeywordContext) K_STORAGE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_STORAGE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_STYPE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_STYPE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_SUPERUSER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_SUPERUSER, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TEXT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TEXT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TIME() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TIME, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TIMESTAMP() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TIMESTAMP, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TIMEUUID() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TIMEUUID, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TINYINT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TINYINT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TRIGGER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TRIGGER, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TTL() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TTL, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TUPLE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TUPLE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_TYPE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_TYPE, 0)
+}
+
+func (s *NonReservedKeywordContext) K_USER() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_USER, 0)
+}
+
+func (s *NonReservedKeywordContext) K_USERS() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_USERS, 0)
+}
+
+func (s *NonReservedKeywordContext) K_UUID() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_UUID, 0)
+}
+
+func (s *NonReservedKeywordContext) K_VALUES() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_VALUES, 0)
+}
+
+func (s *NonReservedKeywordContext) K_VARCHAR() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_VARCHAR, 0)
+}
+
+func (s *NonReservedKeywordContext) K_VARINT() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_VARINT, 0)
+}
+
+func (s *NonReservedKeywordContext) K_WRITETIME() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_WRITETIME, 0)
+}
+
+func (s *NonReservedKeywordContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *NonReservedKeywordContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *NonReservedKeywordContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.EnterNonReservedKeyword(s)
+	}
+}
+
+func (s *NonReservedKeywordContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.ExitNonReservedKeyword(s)
+	}
+}
+
+func (p *CqlParser) NonReservedKeyword() (localctx INonReservedKeywordContext) {
+	localctx = NewNonReservedKeywordContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 46, CqlParserRULE_nonReservedKeyword)
+	var _la int
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(189)
+		_la = p.GetTokenStream().LA(1)
+
+		if !(((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&7977060089555961100) != 0) || ((int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&715075066284708007) != 0)) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
