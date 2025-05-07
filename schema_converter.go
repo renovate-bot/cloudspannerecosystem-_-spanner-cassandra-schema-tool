@@ -257,9 +257,9 @@ func main() {
 			log.Printf("[Skipping non-CREATE TABLE statement]\n")
 		} else {
 			log.Printf("[Converted Spanner statement]\n%s\n", spannerCreateTableStmt)
+			spannerCreateTableStmts = append(spannerCreateTableStmts, spannerCreateTableStmt)
 		}
 		log.Printf("----------------------------------------------")
-		spannerCreateTableStmts = append(spannerCreateTableStmts, spannerCreateTableStmt)
 	}
 
 	outputFile := "schema.txt"
